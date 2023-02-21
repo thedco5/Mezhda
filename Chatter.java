@@ -29,6 +29,7 @@ public class Chatter {
     static final String URL = "jdbc:mysql://127.0.0.1/chatter";
     static final String USER = "root";
     static final String PASS = "msqlroot";
+    static final int FONT_SIZE = 20;
 
     static Action keyboard;
     static JFrame frame;
@@ -118,5 +119,7 @@ public class Chatter {
         frame.add(mainPanel);
         frame.pack();
         frame.setLocationRelativeTo(null);
+
+        new Login();
     }
 }
