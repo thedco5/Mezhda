@@ -14,6 +14,7 @@ import java.awt.GraphicsDevice;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,6 +22,7 @@ import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.JComponent;
+import javax.swing.BorderFactory;
 
 public class Chatter {
 
@@ -39,17 +41,6 @@ public class Chatter {
     static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
 
     public static void main(String[] args) {
-        /* try (
-            Connection conn = DriverManager.getConnection(URL, USER, PASS);
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM messages;");
-        ) {
-            while (rs.next()) {
-                System.out.print("id: " + rs.getInt("id"));
-                System.out.print(", message: '" + rs.getString("message") + "'");
-                System.out.println(", nickname: '" + rs.getString("nickname") + "'");
-            }
-        } catch (Exception e) { e.printStackTrace(); } */
         /* NICKNAME LABEL AND FIELD*/
         label = new JLabel(" nickname: ");
         label.setLocation(0, 0);
@@ -71,14 +62,14 @@ public class Chatter {
                 try (
                     Connection conn = DriverManager.getConnection(URL, USER, PASS);
                     Statement stmt = conn.createStatement();
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM messages;");
+                    ResultSet rs = stmt.executeQuery("SELECT * FROM users;");
                 ) {
                     StringBuilder strbr = new StringBuilder(""); // Document format
-                    while (rs.next()) strbr.append(rs.getString("nickname") + ": " + rs.getString("message") + "\n");
+                    while (rs.next()) strbr.append(rs.getString("username") + ": " + rs.getString("password") + "\n");
                     text.setText(strbr.toString());
                 } catch (Exception e) { e.printStackTrace(); }
             }
-        }, 100, 100);
+        }, 50, 50);
         /* MAIN PANEL */
         mainPanel = new JPanel();
         mainPanel.setLayout(null);
@@ -87,6 +78,11 @@ public class Chatter {
         mainPanel.add(field);
         mainPanel.add(label);
         mainPanel.add(text);
+
+
+        // mainPanel.setBorder(BorderFactory.createTitledBorder("Messages"));
+
+
         /* FULL SCREEN */
         mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("F11"), "f11");
         mainPanel.getActionMap().put("f11", new AbstractAction() {
@@ -105,10 +101,20 @@ public class Chatter {
                 frame.setState(JFrame.ICONIFIED);
             }
         });
+        /*  SCREEN CLOSING */
+        mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("typed a"), "del");
+        mainPanel.getActionMap().put("del", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.setVisible(false);
+                frame.dispose();
+            }
+        });
         /* WINDOW */
         frame = new JFrame("Chatter");
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setIconImage(new ImageIcon("icon.png").getImage());
         frame.add(mainPanel);
         frame.pack();
         frame.setLocationRelativeTo(null);
