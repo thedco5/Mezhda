@@ -21,7 +21,7 @@ public class Database {
         }
     }
 
-    static ResultSet executeQuery(String sql) {
+    static ResultSet query(String sql) {
         try {
             return stmt.executeQuery(sql);
         } catch (Exception e) { 
