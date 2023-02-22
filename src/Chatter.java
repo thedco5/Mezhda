@@ -153,7 +153,7 @@ public class Chatter {
         chat_frame = new JFrame("Chatter");
         // chat_frame.setVisible(true);
         chat_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        chat_frame.setIconImage(new ImageIcon("icon.png").getImage());
+        chat_frame.setIconImage(new ImageIcon("imgs/icon.png").getImage());
         chat_frame.setResizable(false);
         chat_frame.add(main_panel);
         chat_frame.pack();
