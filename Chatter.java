@@ -1,10 +1,5 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
-import java.util.Timer;
-import java.util.TimerTask;
+import java.sql.ResultSet;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -13,7 +8,6 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GraphicsDevice;
 
 import javax.swing.AbstractAction;
-import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,75 +16,93 @@ import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.JComponent;
-import javax.swing.BorderFactory;
 
 public class Chatter {
 
-    static final String URL = "jdbc:mysql://127.0.0.1/chatter";
-    static final String USER = "root";
-    static final String PASS = "msqlroot";
-    static final int FONT_SIZE = 20;
+    static int FONT_SIZE = 20;
 
-    static Action keyboard;
-    static JFrame frame;
+    // static Action keyboard;
+    static JFrame chatFrame, formFrame;
     static JPanel mainPanel;
     static JTextField field;
     static JLabel label;
     static JTextPane text;
 
+    static Button button;
+    static Database database;
+    static String previousUpdate;
+    static int user_id;
+
     static boolean fullScreen;
     static GraphicsDevice device = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
 
     public static void main(String[] args) {
+        /* MISCELLANEOUS */
+        
+        button = new Button();
+        database = new Database();
         /* NICKNAME LABEL AND FIELD*/
-        label = new JLabel(" nickname: ");
+        label = new JLabel(" log in / register ");
         label.setLocation(0, 0);
         label.setFont(new Font("Arial", Font.BOLD, 20));
-        label.setSize(label.getPreferredSize());
-        field = new JTextField();
-        int labelWidth = (int) label.getPreferredSize().getWidth();
         int labelHeight = (int) label.getPreferredSize().getHeight();
-        field.setBounds(labelWidth, 0, labelHeight * 5, labelHeight);
+        label.setSize(new Dimension(labelHeight * 30, labelHeight));
+
+        // field = new JTextField();
+        //field.setBounds(labelWidth, 0, labelHeight * 30, labelHeight);
         /* MESSAGES AREA */
         text = new JTextPane();
         text.setFont(new Font("Arial", Font.PLAIN, 20));
         text.setBounds(0, labelHeight, labelHeight * 30, labelHeight * 18);
         text.setEditable(false);
         /* UPDATING THE MESSAGES */
-        new Timer().schedule(new TimerTask() {
+        /* new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                try (
-                    Connection conn = DriverManager.getConnection(URL, USER, PASS);
-                    Statement stmt = conn.createStatement();
-                    ResultSet rs = stmt.executeQuery("SELECT * FROM users;");
-                ) {
-                    StringBuilder strbr = new StringBuilder(""); // Document format
+                ResultSet rs = Database.executeQuery("SELECT * FROM users;");
+                StringBuilder strbr = new StringBuilder(""); // Document format
+                try {
                     while (rs.next()) strbr.append(rs.getString("username") + ": " + rs.getString("password") + "\n");
-                    text.setText(strbr.toString());
-                } catch (Exception e) { e.printStackTrace(); }
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
+                text.setText(strbr.toString());
             }
-        }, 50, 50);
+        }, 100, 100); */
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (;;) {
+                    ResultSet rs = Database.executeQuery("SELECT * FROM users;");
+                    StringBuilder strbr = new StringBuilder(""); // Document format
+                    try {
+                        while (rs.next()) strbr.append(rs.getString("username") + ": " + rs.getString("password") + "\n");
+                    } catch (Exception e) {
+                        System.err.println(e.getMessage());
+                    }
+                    String str = strbr.toString();
+                    if (!str.equals(previousUpdate)) text.setText(str);
+                    previousUpdate = new String(str);
+                    try { Thread.sleep(100); } // updates every tenth of a second
+                    catch (Exception e) { }
+                }
+            }
+        }).start();
         /* MAIN PANEL */
         mainPanel = new JPanel();
         mainPanel.setLayout(null);
         mainPanel.setPreferredSize(new Dimension(labelHeight * 30, labelHeight * 20));
         mainPanel.setFocusable(false);
-        mainPanel.add(field);
+        // mainPanel.add(field);
         mainPanel.add(label);
         mainPanel.add(text);
-
-
-        // mainPanel.setBorder(BorderFactory.createTitledBorder("Messages"));
-
-
         /* FULL SCREEN */
         mainPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("F11"), "f11");
         mainPanel.getActionMap().put("f11", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 fullScreen = !fullScreen;
-                if (fullScreen) device.setFullScreenWindow(frame);
+                if (fullScreen) device.setFullScreenWindow(chatFrame);
                 else device.setFullScreenWindow(null);
             }
         });
@@ -99,7 +111,7 @@ public class Chatter {
         mainPanel.getActionMap().put("esc", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setState(JFrame.ICONIFIED);
+                chatFrame.setState(JFrame.ICONIFIED);
             }
         });
         /*  SCREEN CLOSING */
@@ -107,19 +119,19 @@ public class Chatter {
         mainPanel.getActionMap().put("del", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
-                frame.dispose();
+                chatFrame.setVisible(false);
+                chatFrame.dispose();
             }
         });
         /* WINDOW */
-        frame = new JFrame("Chatter");
-        frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setIconImage(new ImageIcon("icon.png").getImage());
-        frame.add(mainPanel);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
+        chatFrame = new JFrame("Chatter");
+        // chatFrame.setVisible(true);
+        chatFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        chatFrame.setIconImage(new ImageIcon("icon.png").getImage());
+        chatFrame.add(mainPanel);
+        chatFrame.pack();
+        chatFrame.setLocationRelativeTo(null);
 
-        new Login();
+        formFrame = new Form();
     }
 }
