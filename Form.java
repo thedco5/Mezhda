@@ -27,7 +27,6 @@ public class Form extends JFrame {
         username_field = new JTextField("");
         username_field.setFont(Chatter.font);
         label_height = (int) username_label.getPreferredSize().getHeight();
-        System.out.println(username_label.getPreferredSize().getHeight());
         username_field.setPreferredSize(new Dimension(label_height * 5, label_height));
         username_panel = new Panel(new FlowLayout(FlowLayout.RIGHT));
         username_panel.add(username_label);
@@ -63,7 +62,7 @@ public class Form extends JFrame {
         /* WINDOW */
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setIconImage(new ImageIcon("icon.png").getImage());
+        setIconImage(new ImageIcon("imgs/icon.png").getImage());
         setResizable(false);
         getRootPane().setDefaultButton(login_button);
         add(main_panel);

@@ -29,4 +29,15 @@ public class Database {
             return null;
         }
     }
+    static ResultSet selectFromUsers(String username) {
+        return query("SELECT * FROM users WHERE username LIKE '" + username + "';");
+    }
+    static int getUserID(String username) {
+        ResultSet rs = selectFromUsers(username);
+        try {
+            rs.next();
+            return rs.getInt("id");
+        } catch (Exception e) { }
+        return 0;
+    }
 }

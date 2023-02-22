@@ -1,8 +1,8 @@
 import java.sql.ResultSet;
-
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.awt.GraphicsEnvironment;
 import java.awt.GraphicsDevice;
@@ -24,13 +24,18 @@ public class Chatter {
     static JFrame chat_frame, form_frame;
     static JPanel main_panel;
     static JTextField field;
-    static Label label;
     static JTextPane text;
+
+    static Label label;
+    static MenuBar menu_bar;
+    static Menu profile_menu, change_profile_sm;
+    static MenuItem username_mi, change_username_mi, change_password_mi, sign_out_mi;
 
     static Font font;
     static Border padding;
     static ButtonListener button_listener;
     static Database database;
+
     static String prev_update;
     
     static int user_id;
@@ -53,14 +58,14 @@ public class Chatter {
 
         /* TOP LABEL AND FIELD*/
         label = new Label(" label ");
-        label.setLocation(0, 0);
+        label.setLocation(0, 24);
         int label_height = (int) label.getPreferredSize().getHeight();
         label.setSize(new Dimension(label_height * 30, label_height));
 
         /* MESSAGES AREA */
         text = new JTextPane();
         text.setFont(font);
-        text.setBounds(0, label_height, label_height * 30, label_height * 18);
+        text.setBounds(0, label_height * 2, label_height * 30, label_height * 18);
         text.setEditable(false);
 
         /* UPDATING THE MESSAGES */
@@ -84,11 +89,34 @@ public class Chatter {
             }
         }).start();
 
+        /* TOP MENU */
+        username_mi = new MenuItem("Logged in as: ");
+        username_mi.setEnabled(false);
+        change_username_mi = new MenuItem("Change username", KeyEvent.VK_U);
+        change_password_mi = new MenuItem("Change password", KeyEvent.VK_P);
+        change_profile_sm = new Menu("Change profile", KeyEvent.VK_C);
+        change_profile_sm.add(change_username_mi);
+        change_profile_sm.add(change_password_mi);
+        sign_out_mi = new MenuItem("Sign out", KeyEvent.VK_S);
+
+        profile_menu = new Menu("Profile", KeyEvent.VK_P);
+        profile_menu.add(username_mi);
+        profile_menu.add(change_profile_sm);
+        profile_menu.add(sign_out_mi);
+        Menu menu_pipe = new Menu("I");
+        menu_pipe.setEnabled(false);
+
+        menu_bar = new MenuBar();
+        menu_bar.add(profile_menu);
+        menu_bar.add(menu_pipe);
+        menu_bar.setBounds(0, 0, label_height * 30, label_height);
+
         /* MAIN PANEL */
         main_panel = new JPanel();
         main_panel.setLayout(null);
         main_panel.setPreferredSize(new Dimension(label_height * 30, label_height * 20));
         main_panel.setFocusable(false);
+        main_panel.add(menu_bar);
         main_panel.add(label);
         main_panel.add(text);
 
@@ -108,29 +136,21 @@ public class Chatter {
         main_panel.getActionMap().put("esc", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                System.out.println("+ " + e.getSource());
                 chat_frame.setState(JFrame.ICONIFIED);
             }
         });
 
-        /*  SCREEN CLOSING */
-        main_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("typed a"), "del");
-        main_panel.getActionMap().put("del", new AbstractAction() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                chat_frame.setVisible(false);
-                chat_frame.dispose();
-            }
-        });
-
-        /* WINDOW */
+        /* WINDOWS */
+        form_frame = new Form();
         chat_frame = new JFrame("Chatter");
+        // chat_frame.setVisible(true);
         chat_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         chat_frame.setIconImage(new ImageIcon("icon.png").getImage());
+        chat_frame.setResizable(false);
         chat_frame.add(main_panel);
         chat_frame.pack();
         chat_frame.setLocationRelativeTo(null);
-
-        form_frame = new Form();
     }
 
 }

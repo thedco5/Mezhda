@@ -11,15 +11,13 @@ public class ButtonListener implements ActionListener {
             case "Register" -> {
                 String username = Form.username_field.getText();
                 String password = new String(Form.password_field.getPassword());
-                ResultSet rs = Database.query("SELECT * FROM users WHERE username LIKE '" + username + "';");
+                ResultSet rs = Database.selectFromUsers(username);
                 try {
-                    if (!username.matches("^[A-Za-z0-9_]{4,16}") || !password.matches("^[A-Za-z0-9_]{4,16}")) {
-                        JOptionPane.showMessageDialog(null, "Only 4-16 characters A-Z, \na-z, 0-9 and _ are allowed!", "Error!", JOptionPane.ERROR_MESSAGE);
-                    } else if (rs.next()) {
+                    if (!Utility.checkRegex(username, password)) break;
+                    if (rs.next()) {
                         if (password.equals(rs.getString("password"))) {
-                            Chatter.label.setText(" logged in as " + username);
-                            Chatter.form_frame.dispose();
-                            Chatter.chat_frame.setVisible(true);
+                            Chatter.user_id = rs.getInt("id");
+                            Utility.setUser(username);
                         } else { 
                             JOptionPane.showMessageDialog(null, "This username already exists! \nTry again!", "Error!", JOptionPane.ERROR_MESSAGE);
                         }
@@ -32,13 +30,13 @@ public class ButtonListener implements ActionListener {
             case "Log in" -> {
                 String username = Form.username_field.getText();
                 String password = new String(Form.password_field.getPassword());
-                ResultSet rs = Database.query("SELECT * FROM users WHERE username LIKE '" + username + "';");
+                ResultSet rs = Database.selectFromUsers(username);
                 try {
+                    if (!Utility.checkRegex(username, password)) break;
                     if (rs.next()) {
                         if (password.equals(rs.getString("password"))) {
-                            Chatter.label.setText(" logged in as " + username);
-                            Chatter.form_frame.dispose();
-                            Chatter.chat_frame.setVisible(true);
+                            Chatter.user_id = rs.getInt("id");
+                            Utility.setUser(username);
                         } else { 
                             JOptionPane.showMessageDialog(null, "Wrong password! \nTry again!", "Error!", JOptionPane.ERROR_MESSAGE);
                         }
@@ -47,6 +45,12 @@ public class ButtonListener implements ActionListener {
                     }  
                 } catch (Exception e) { }
             }
+            case "Sign out" -> {
+                Chatter.user_id = 0;
+                Chatter.chat_frame.dispose();
+                Chatter.form_frame = new Form();
+            }
+            default -> System.out.println(ae.getActionCommand());
         }
     }
 }
