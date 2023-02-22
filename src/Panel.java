@@ -1,13 +1,15 @@
+package src;
+
 import javax.swing.JPanel;
 
 import java.awt.Color;
 import java.awt.LayoutManager;
 
 public class Panel extends JPanel {
-    Panel() {
+    public Panel() {
         setBackground(Color.WHITE);
     }
-    Panel(LayoutManager lm) {
+    public Panel(LayoutManager lm) {
         this();
         setLayout(lm);
     }

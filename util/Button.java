@@ -1,8 +1,13 @@
+package util;
+
 import javax.swing.JButton;
+
+import src.Chatter;
+
 import java.awt.Color;
 
 public class Button extends JButton {
-    Button(String name) {
+    public Button(String name) {
         setText(name);
         setFocusPainted(false);
         setFont(Chatter.font);

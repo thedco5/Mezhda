@@ -1,3 +1,5 @@
+package src;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -10,15 +12,17 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import util.Button;
+
 public class Form extends JFrame {
 
-    static Panel main_panel, username_panel, password_panel, button_panel;
-    static Label username_label, password_label;
-    static JTextField username_field;
-    static JPasswordField password_field;
-    static Button login_button, register_button;
+    public static Panel main_panel, username_panel, password_panel, button_panel;
+    public static Label username_label, password_label;
+    public static JTextField username_field;
+    public static JPasswordField password_field;
+    public static Button login_button, register_button;
 
-    Form() {
+    public Form() {
         
         int label_height;
 

@@ -1,9 +1,11 @@
+package menu;
+
 import java.awt.Color;
 
 import javax.swing.JMenuBar;
 
 public class MenuBar extends JMenuBar {
-    MenuBar() {
+    public MenuBar() {
         setBackground(Color.WHITE);
     }
 }

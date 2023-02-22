@@ -1,3 +1,5 @@
+package util;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -5,14 +7,14 @@ import java.sql.Statement;
 
 public class Database {
 
-    static final String URL = "jdbc:mysql://127.0.0.1/chatter";
-    static final String USER = "root";
-    static final String PASS = "msqlroot";
+    public static final String URL = "jdbc:mysql://127.0.0.1/chatter";
+    public static final String USER = "root";
+    public static final String PASS = "msqlroot";
 
-    static Connection conn;
-    static Statement stmt;
+    public static Connection conn;
+    public static Statement stmt;
 
-    Database() {
+    public Database() {
         try {
             conn = DriverManager.getConnection(URL, USER, PASS);
             stmt = conn.createStatement();
@@ -21,7 +23,7 @@ public class Database {
         }
     }
 
-    static ResultSet query(String sql) {
+    public static ResultSet query(String sql) {
         try {
             return stmt.executeQuery(sql);
         } catch (Exception e) { 
@@ -29,10 +31,10 @@ public class Database {
             return null;
         }
     }
-    static ResultSet selectFromUsers(String username) {
+    public static ResultSet selectFromUsers(String username) {
         return query("SELECT * FROM users WHERE username LIKE '" + username + "';");
     }
-    static int getUserID(String username) {
+    public static int getUserID(String username) {
         ResultSet rs = selectFromUsers(username);
         try {
             rs.next();

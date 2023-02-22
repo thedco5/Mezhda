@@ -1,3 +1,5 @@
+package src;
+
 import java.sql.ResultSet;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -16,31 +18,36 @@ import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.border.Border;
+
+import menu.*;
+import util.ButtonListener;
+import util.Database;
+
 import javax.swing.JComponent;
 
 public class Chatter {
 
     // static Action keyboard;
-    static JFrame chat_frame, form_frame;
-    static JPanel main_panel;
-    static JTextField field;
-    static JTextPane text;
+    public static JFrame chat_frame, form_frame;
+    public static JPanel main_panel;
+    public static JTextField field;
+    public static JTextPane text;
 
-    static Label label;
-    static MenuBar menu_bar;
-    static Menu profile_menu, change_profile_sm;
-    static MenuItem username_mi, change_username_mi, change_password_mi, sign_out_mi;
+    public static Label label;
+    public static MenuBar menu_bar;
+    public static Menu profile_menu, change_profile_sm;
+    public static MenuItem username_mi, change_username_mi, change_password_mi, sign_out_mi;
 
-    static Font font;
-    static Border padding;
-    static ButtonListener button_listener;
-    static Database database;
+    public static Font font;
+    public static Border padding;
+    public static ButtonListener button_listener;
+    public static Database database;
 
-    static String prev_update;
+    public static String prev_update;
     
-    static int user_id;
-    static boolean full_screen;
-    static GraphicsDevice gr_dev = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
+    public static int user_id;
+    public static boolean full_screen;
+    public static GraphicsDevice gr_dev = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
 
     public static void main(String[] args) {
 
