@@ -9,6 +9,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GraphicsDevice;
 
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -16,6 +17,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
+import javax.swing.border.Border;
 import javax.swing.JComponent;
 
 public class Chatter {
@@ -24,11 +26,12 @@ public class Chatter {
     static JFrame chat_frame, form_frame;
     static JPanel main_panel;
     static JTextField field;
-    static JLabel label;
+    static Label label;
     static JTextPane text;
 
     static Font font;
-    static Button button;
+    static Border padding;
+    static ButtonListener button_listener;
     static Database database;
     static String prev_update;
     
@@ -46,13 +49,13 @@ public class Chatter {
         } catch (Exception e) { font = new Font("Arial", Font.PLAIN, 20); }
 
         /* OTHER */
-        button = new Button();
+        padding = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+        button_listener = new ButtonListener();
         database = new Database();
 
         /* TOP LABEL AND FIELD*/
-        label = new JLabel(" label ");
+        label = new Label(" label ");
         label.setLocation(0, 0);
-        label.setFont(font);
         int label_height = (int) label.getPreferredSize().getHeight();
         label.setSize(new Dimension(label_height * 30, label_height));
 
@@ -131,4 +134,5 @@ public class Chatter {
 
         form_frame = new Form();
     }
+
 }
