@@ -2,7 +2,7 @@ package util;
 
 import javax.swing.JButton;
 
-import src.Chatter;
+import src.*;
 
 import java.awt.Color;
 

@@ -1,6 +1,6 @@
 package util;
 
-import src.Chatter;
+import src.*;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;

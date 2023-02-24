@@ -2,8 +2,8 @@ package menu;
 
 import javax.swing.JMenuItem;
 
-import src.Chatter;
-import util.Utility;
+import src.*;
+import util.*;
 
 public class MenuItem extends JMenuItem {
     public MenuItem (String str) {

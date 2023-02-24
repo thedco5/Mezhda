@@ -20,10 +20,9 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 
-import forms.Form;
+import forms.*;
 import menu.*;
-import util.ButtonListener;
-import util.Database;
+import util.*;
 
 import javax.swing.JComponent;
 

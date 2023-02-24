@@ -12,10 +12,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
-import src.Chatter;
-import src.Label;
-import src.Panel;
-import util.Button;
+import src.*;
+import util.*;
 
 public class Form extends JFrame {
 

@@ -2,7 +2,7 @@ package menu;
 
 import javax.swing.JMenu;
 
-import util.Utility;
+import util.*;
 
 public class Menu extends JMenu {
     public Menu (String str) {
