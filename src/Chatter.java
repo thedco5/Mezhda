@@ -1,6 +1,7 @@
 package src;
 
 import java.sql.ResultSet;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 
+import forms.Form;
 import menu.*;
 import util.ButtonListener;
 import util.Database;
@@ -28,7 +30,7 @@ import javax.swing.JComponent;
 public class Chatter {
 
     // static Action keyboard;
-    public static JFrame chat_frame, form_frame;
+    public static JFrame chat_frame, form_frame, change_username_frame;
     public static JPanel main_panel;
     public static JTextField field;
     public static JTextPane text;
@@ -36,7 +38,7 @@ public class Chatter {
     public static Label label;
     public static MenuBar menu_bar;
     public static Menu profile_menu, change_profile_sm;
-    public static MenuItem username_mi, change_username_mi, change_password_mi, sign_out_mi;
+    public static MenuItem username_mi, change_username_mi, change_password_mi, delete_profile_mi, sign_out_mi;
 
     public static Font font;
     public static Border padding;
@@ -85,7 +87,7 @@ public class Chatter {
                     try {
                         while (rs.next()) strbr.append(rs.getString("username") + ": " + rs.getString("password") + "\n");
                     } catch (Exception e) {
-                        System.err.println(e.getMessage());
+                        System.err.println(e.getLocalizedMessage());
                     }
                     String str = strbr.toString();
                     if (!str.equals(prev_update)) text.setText(str);
@@ -105,11 +107,14 @@ public class Chatter {
         change_profile_sm.add(change_username_mi);
         change_profile_sm.add(change_password_mi);
         sign_out_mi = new MenuItem("Sign out", KeyEvent.VK_S);
+        delete_profile_mi = new MenuItem("Delete account", KeyEvent.VK_D);
+        delete_profile_mi.setForeground(Color.RED.darker());
 
         profile_menu = new Menu("Profile", KeyEvent.VK_P);
         profile_menu.add(username_mi);
         profile_menu.add(change_profile_sm);
         profile_menu.add(sign_out_mi);
+        profile_menu.add(delete_profile_mi);
         Menu menu_pipe = new Menu("I");
         menu_pipe.setEnabled(false);
 
@@ -143,7 +148,6 @@ public class Chatter {
         main_panel.getActionMap().put("esc", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("+ " + e.getSource());
                 chat_frame.setState(JFrame.ICONIFIED);
             }
         });

@@ -1,11 +1,12 @@
 package util;
 
+import src.Chatter;
+
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
-import src.Chatter;
-
 import java.awt.Color;
+
 
 public class Utility {
     public static void makeDefaults(JComponent component) {
@@ -14,7 +15,6 @@ public class Utility {
     }
     public static void setUser(String username) {
         Chatter.username_mi.setText(username);
-        Chatter.form_frame.dispose();
         Chatter.chat_frame.setVisible(true);
     }
     public static boolean checkRegex(String username, String password) {

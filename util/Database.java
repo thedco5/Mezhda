@@ -18,18 +18,15 @@ public class Database {
         try {
             conn = DriverManager.getConnection(URL, USER, PASS);
             stmt = conn.createStatement();
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
+        } catch (Exception e) { System.err.println(e.getLocalizedMessage()); }
     }
 
     public static ResultSet query(String sql) {
         try {
-            return stmt.executeQuery(sql);
-        } catch (Exception e) { 
-            System.err.println(e.getMessage());
-            return null;
-        }
+            if (stmt.execute(sql))
+                return stmt.getResultSet();
+        } catch (Exception e) { System.err.println(e.getLocalizedMessage()); }
+        return null;
     }
     public static ResultSet selectFromUsers(String username) {
         return query("SELECT * FROM users WHERE username LIKE '" + username + "';");
@@ -39,7 +36,15 @@ public class Database {
         try {
             rs.next();
             return rs.getInt("id");
-        } catch (Exception e) { }
+        } catch (Exception e) { System.err.println(e.getLocalizedMessage()); }
         return 0;
+    }
+    public static String getUsername(int id) {
+        ResultSet rs = query("SELECT * FROM users WHERE id LIKE " + id + ";");
+        try {
+            rs.next();
+            return rs.getString("username");
+        } catch (Exception e) { System.err.println(e.getLocalizedMessage()); }
+        return null;
     }
 }

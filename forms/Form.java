@@ -1,4 +1,4 @@
-package src;
+package forms;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -12,6 +12,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 
+import src.Chatter;
+import src.Label;
+import src.Panel;
 import util.Button;
 
 public class Form extends JFrame {
