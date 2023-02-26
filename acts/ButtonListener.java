@@ -17,8 +17,7 @@ public class ButtonListener implements ActionListener {
             case "Register" -> {
                 String username = LogForm.username_field.getText();
                 String password = new String(LogForm.password_field.getPassword());
-                ResultSet rs = Database.selectFromUsers(username);
-                try {
+                try (ResultSet rs = Database.selectFromUsers(username)) {
                     if (!Utility.checkRegex(username, password)) break;
                     if (rs.next()) {
                         if (Password.compare(password, rs.getString("password"))) {
@@ -63,16 +62,17 @@ public class ButtonListener implements ActionListener {
                             JOptionPane.showMessageDialog(null, "Username already exists! \nTry again!", "Error!", JOptionPane.ERROR_MESSAGE);
                             break;
                         }
-                        ResultSet rs = Database.selectFromUsers(Chatter.user_id);
-                        if (rs.next()) {
-                            if (Password.compare(password, rs.getString("password"))) {
-                                Database.query("UPDATE users SET username = '" + username + "' WHERE id LIKE '" + Chatter.user_id + "';");
-                                Utility.setUser(username);
-                                Chatter.change_username_frame.dispose();
-                            } else { 
-                                JOptionPane.showMessageDialog(null, "Wrong password! \nTry again!", "Error!", JOptionPane.ERROR_MESSAGE);
+                        try ( ResultSet rs = Database.selectFromUsers(Chatter.user_id) ) {
+                            if (rs.next()) {
+                                if (Password.compare(password, rs.getString("password"))) {
+                                    Database.query("UPDATE users SET username = '" + username + "' WHERE id LIKE '" + Chatter.user_id + "';");
+                                    Utility.setUser(username);
+                                    Chatter.change_username_frame.dispose();
+                                } else { 
+                                    JOptionPane.showMessageDialog(null, "Wrong password! \nTry again!", "Error!", JOptionPane.ERROR_MESSAGE);
+                                }
                             }
-                        }
+                        } catch (Exception e) { e.printStackTrace(); }
                     } else JOptionPane.showMessageDialog(null, "Usernames don't match", "Error!", JOptionPane.ERROR_MESSAGE);
                 } catch (Exception e) { e.printStackTrace(); }
             }
@@ -99,8 +99,7 @@ public class ButtonListener implements ActionListener {
             case "Delete account" -> {
                 String password = new String(DeleteAccount.password_field.getPassword());
                 if (!Utility.checkRegex(password, password)) break;
-                try {
-                    ResultSet rs = Database.selectFromUsers(Chatter.user_id);
+                try ( ResultSet rs = Database.selectFromUsers(Chatter.user_id) ) {
                     if (rs.next()) {
                         if (Password.compare(password, rs.getString("password"))) {
                             Database.query("DELETE FROM users WHERE id LIKE " + Chatter.user_id + ";");

@@ -1,12 +1,13 @@
 package src;
 
-import java.sql.ResultSet;
+import java.io.File;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-import java.io.File;
+import java.awt.BorderLayout;
 import java.awt.GraphicsEnvironment;
 import java.awt.GraphicsDevice;
 
@@ -75,27 +76,11 @@ public class Chatter {
         /* MESSAGES AREA */
         text = new JTextPane();
         text.setFont(font);
-        text.setBounds(0, label_height * 2, label_height * 30, label_height * 18);
+        text.setSize(label_height * 30, label_height * 18);
         text.setEditable(false);
 
         /* UPDATING THE MESSAGES */
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                for (;;) {
-                    ResultSet rs = Database.query("SELECT * FROM users;");
-                    StringBuilder strbr = new StringBuilder(""); // Document format
-                    try {
-                        while (rs.next()) strbr.append(rs.getString("username") + ": " + rs.getString("password") + "\n");
-                    } catch (Exception e) { e.printStackTrace(); }
-                    String str = strbr.toString();
-                    if (!str.equals(prev_update)) text.setText(str);
-                    prev_update = new String(str);
-                    try { Thread.sleep(100); } // updates every tenth of a second
-                    catch (Exception e) { e.printStackTrace(); }
-                }
-            }
-        }).start();
+        new Thread(new Updater()).start();
 
         /* TOP MENU */
         username_mi = new MenuItem(" - ");
@@ -124,12 +109,12 @@ public class Chatter {
 
         /* MAIN PANEL */
         main_panel = new JPanel();
-        main_panel.setLayout(null);
+        main_panel.setLayout(new BorderLayout());
         main_panel.setPreferredSize(new Dimension(label_height * 30, label_height * 20));
         main_panel.setFocusable(false);
-        main_panel.add(menu_bar);
-        main_panel.add(label);
-        main_panel.add(text);
+        main_panel.add(menu_bar, BorderLayout.NORTH);
+        main_panel.add(label, BorderLayout.SOUTH);
+        main_panel.add(text, BorderLayout.CENTER);
 
         /* FULL SCREEN */
         main_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("F11"), "f11");

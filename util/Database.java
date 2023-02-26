@@ -35,18 +35,15 @@ public class Database {
         return query("SELECT * FROM users WHERE id LIKE " + id + ";");
     }
     public static int getUserID(String username) {
-        ResultSet rs = selectFromUsers(username);
-        try {
+        try ( ResultSet rs = selectFromUsers(username) ) {
             rs.next();
             return rs.getInt("id");
         } catch (Exception e) { e.printStackTrace(); }
         return 0;
     }
     public static String getUsername(int id) {
-        ResultSet rs = query("SELECT * FROM users WHERE id LIKE " + id + ";");
-        try {
-            rs.next();
-            return rs.getString("username");
+        try ( ResultSet rs = query("SELECT * FROM users WHERE id LIKE " + id + ";") ) {
+            if (rs.next()) return rs.getString("username");
         } catch (Exception e) { e.printStackTrace(); }
         return null;
     }
