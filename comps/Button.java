@@ -1,4 +1,4 @@
-package util;
+package comps;
 
 import javax.swing.JButton;
 

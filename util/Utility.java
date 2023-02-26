@@ -18,10 +18,13 @@ public class Utility {
         Chatter.chat_frame.setVisible(true);
     }
     public static boolean checkRegex(String username, String password) {
-        if (!(username.matches("^[A-Za-z0-9_]{4,16}") && password.matches("^[A-Za-z0-9_]{4,16}"))) {
+        if (!(checkRegex(username) && checkRegex(password))) {
             JOptionPane.showMessageDialog(null, "Only 4-16 characters A-Z, \na-z, 0-9 and _ are allowed!", "Error!", JOptionPane.ERROR_MESSAGE);
             return false;
         }
         return true;
+    }
+    public static boolean checkRegex(String str) {
+        return str.matches("^[A-Za-z0-9_]{4,16}");
     }
 }

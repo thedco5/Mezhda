@@ -21,7 +21,7 @@ import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 
 import forms.*;
-import menu.*;
+import comps.*;
 import util.*;
 
 import javax.swing.JComponent;
@@ -29,7 +29,7 @@ import javax.swing.JComponent;
 public class Chatter {
 
     // static Action keyboard;
-    public static JFrame chat_frame, form_frame, change_username_frame;
+    public static JFrame chat_frame, form_frame, change_username_frame, delete_account_frame;
     public static JPanel main_panel;
     public static JTextField field;
     public static JTextPane text;
@@ -98,7 +98,7 @@ public class Chatter {
         }).start();
 
         /* TOP MENU */
-        username_mi = new MenuItem("Logged in as: ");
+        username_mi = new MenuItem(" - ");
         username_mi.setEnabled(false);
         change_username_mi = new MenuItem("Change username", KeyEvent.VK_U);
         change_password_mi = new MenuItem("Change password", KeyEvent.VK_P);
@@ -157,7 +157,7 @@ public class Chatter {
         // chat_frame.setVisible(true);
         chat_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         chat_frame.setIconImage(new ImageIcon("imgs/icon.png").getImage());
-        chat_frame.setResizable(false);
+        // chat_frame.setResizable(false);
         chat_frame.add(main_panel);
         chat_frame.pack();
         chat_frame.setLocationRelativeTo(null);

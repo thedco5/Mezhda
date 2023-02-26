@@ -31,6 +31,9 @@ public class Database {
     public static ResultSet selectFromUsers(String username) {
         return query("SELECT * FROM users WHERE username LIKE '" + username + "';");
     }
+    public static ResultSet selectFromUsers(int id) {
+        return query("SELECT * FROM users WHERE id LIKE " + id + ";");
+    }
     public static int getUserID(String username) {
         ResultSet rs = selectFromUsers(username);
         try {

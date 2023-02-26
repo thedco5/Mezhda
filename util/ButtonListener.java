@@ -20,7 +20,7 @@ public class ButtonListener implements ActionListener {
                 try {
                     if (!Utility.checkRegex(username, password)) break;
                     if (rs.next()) {
-                        if (password.equals(rs.getString("password"))) {
+                        if (Password.compare(password, rs.getString("password"))) {
                             Chatter.user_id = rs.getInt("id");
                             Utility.setUser(username);
                             Chatter.form_frame.setVisible(false);
@@ -28,7 +28,7 @@ public class ButtonListener implements ActionListener {
                             JOptionPane.showMessageDialog(null, "This username already exists! \nTry again!", "Error!", JOptionPane.ERROR_MESSAGE);
                         }
                     } else {
-                        Database.stmt.execute("INSERT INTO users (username, password) VALUES ('" + username + "', '" + password + "')");
+                        Database.stmt.execute("INSERT INTO users (username, password) VALUES ('" + username + "', '" + Password.encode(password) + "');");
                         JOptionPane.showMessageDialog(null, "Successfully added new user.", "Success!", JOptionPane.INFORMATION_MESSAGE);
                     }  
                 } catch (Exception e) { System.err.println(e.getLocalizedMessage()); }
@@ -40,7 +40,7 @@ public class ButtonListener implements ActionListener {
                 try {
                     if (!Utility.checkRegex(username, password)) break;
                     if (rs.next()) {
-                        if (password.equals(rs.getString("password"))) {
+                        if (Password.compare(password, rs.getString("password"))) {
                             Chatter.user_id = rs.getInt("id");
                             Utility.setUser(username);
                             Chatter.form_frame.setVisible(false);
@@ -56,6 +56,10 @@ public class ButtonListener implements ActionListener {
                 Chatter.user_id = 0;
                 Chatter.chat_frame.dispose();
                 Chatter.form_frame.setVisible(true);
+            }
+            case "Delete account" -> {
+                Chatter.chat_frame.dispose();
+                Chatter.delete_account_frame = new DeleteAccount();
             }
             case "Change username" -> {
                 Chatter.chat_frame.setVisible(false);
@@ -74,9 +78,9 @@ public class ButtonListener implements ActionListener {
                             JOptionPane.showMessageDialog(null, "Username already exists! \nTry again!", "Error!", JOptionPane.ERROR_MESSAGE);
                             break;
                         }
-                        ResultSet rs = Database.selectFromUsers(Database.getUsername(Chatter.user_id));
+                        ResultSet rs = Database.selectFromUsers(Chatter.user_id);
                         if (rs.next()) {
-                            if (password.equals(rs.getString("password"))) {
+                            if (Password.compare(password, rs.getString("password"))) {
                                 Database.query("UPDATE users SET username = '" + username + "' WHERE username LIKE '" + Database.getUsername(Chatter.user_id) + "';");
                                 Utility.setUser(username);
                                 Chatter.change_username_frame.dispose();
@@ -85,6 +89,24 @@ public class ButtonListener implements ActionListener {
                             }
                         }
                     } else JOptionPane.showMessageDialog(null, "Usernames don't match", "Error!", JOptionPane.ERROR_MESSAGE);
+                } catch (Exception e) { System.err.println(e.getLocalizedMessage()); }
+            }
+            case "Delete account confirmed" -> {
+                String password = new String(DeleteAccount.password_field.getPassword());
+                if (!Utility.checkRegex(password, password)) break;
+                try {
+                    ResultSet rs = Database.selectFromUsers(Chatter.user_id);
+                    if (rs.next()) {
+                        if (Password.compare(password, rs.getString("password"))) {
+                            Database.query("DELETE FROM users WHERE id LIKE " + Chatter.user_id + ";");
+                            Chatter.user_id = 0;
+                            Chatter.delete_account_frame.dispose();
+                            JOptionPane.showMessageDialog(null, "Successfully deleted the account.", "Success!", JOptionPane.INFORMATION_MESSAGE);
+                            Chatter.form_frame.setVisible(true);
+                        } else { 
+                            JOptionPane.showMessageDialog(null, "Wrong password! \nTry again!", "Error!", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
                 } catch (Exception e) { System.err.println(e.getLocalizedMessage()); }
             }
             default -> System.out.println(ae.getActionCommand());

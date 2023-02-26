@@ -16,6 +16,7 @@ import javax.swing.border.TitledBorder;
 
 import src.*;
 import util.*;
+import comps.*;
 
 public class ChangeUsername extends JFrame {
 
@@ -28,10 +29,11 @@ public class ChangeUsername extends JFrame {
     public ChangeUsername() {
         
         int label_height;
+        String current_username = Database.getUsername(Chatter.user_id);
 
         /* NEW USERNAME */
         new_username = new Label("new username");
-        new_username_field = new JTextField("");
+        new_username_field = new JTextField(current_username);
         new_username_field.setFont(Chatter.font);
         label_height = (int) new_username.getPreferredSize().getHeight();
         new_username_field.setPreferredSize(new Dimension(label_height * 5, label_height));
@@ -41,7 +43,7 @@ public class ChangeUsername extends JFrame {
 
         /* CONFIRM USERNAME */
         confirm_username = new Label("repeat username");
-        confirm_username_field = new JTextField("");
+        confirm_username_field = new JTextField(current_username);
         confirm_username_field.setFont(Chatter.font);
         label_height = (int) new_username.getPreferredSize().getHeight();
         confirm_username_field.setPreferredSize(new Dimension(label_height * 5, label_height));
