@@ -25,7 +25,8 @@ public class MenuListener implements ActionListener {
                 Chatter.change_username_frame = new ChangeUsername();
             }
             case "Change password" -> {
-                
+                Chatter.chat_frame.setVisible(false);
+                Chatter.change_password_frame = new ChangePassword();
             }
             default -> System.out.println(ae.getActionCommand());
         }

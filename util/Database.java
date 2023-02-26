@@ -18,14 +18,14 @@ public class Database {
         try {
             conn = DriverManager.getConnection(URL, USER, PASS);
             stmt = conn.createStatement();
-        } catch (Exception e) { System.err.println(e.getLocalizedMessage()); }
+        } catch (Exception e) { e.printStackTrace(); }
     }
 
-    public static ResultSet query(String sql) {
+    public static synchronized ResultSet query(String sql) {
         try {
             if (stmt.execute(sql))
                 return stmt.getResultSet();
-        } catch (Exception e) { System.err.println(e.getLocalizedMessage()); }
+        } catch (Exception e) { e.printStackTrace(); }
         return null;
     }
     public static ResultSet selectFromUsers(String username) {
@@ -39,7 +39,7 @@ public class Database {
         try {
             rs.next();
             return rs.getInt("id");
-        } catch (Exception e) { System.err.println(e.getLocalizedMessage()); }
+        } catch (Exception e) { e.printStackTrace(); }
         return 0;
     }
     public static String getUsername(int id) {
@@ -47,7 +47,7 @@ public class Database {
         try {
             rs.next();
             return rs.getString("username");
-        } catch (Exception e) { System.err.println(e.getLocalizedMessage()); }
+        } catch (Exception e) { e.printStackTrace(); }
         return null;
     }
 }

@@ -15,7 +15,7 @@ import javax.swing.border.TitledBorder;
 import src.*;
 import comps.*;
 
-public class Form extends JFrame {
+public class LogForm extends JFrame {
 
     public static Panel main_panel, username_panel, password_panel, button_panel;
     public static Label username_label, password_label;
@@ -23,7 +23,7 @@ public class Form extends JFrame {
     public static JPasswordField password_field;
     public static Button login_button, register_button;
 
-    public Form() {
+    public LogForm() {
         
         int label_height;
 

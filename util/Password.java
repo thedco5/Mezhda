@@ -12,7 +12,7 @@ public class Password {
             for (byte b : digest.digest(password.getBytes()))
                 res.append(String.format("%02x", b));
             return res.toString();
-        } catch (Exception e) { System.err.println(e.getLocalizedMessage()); }
+        } catch (Exception e) { e.printStackTrace(); }
         return null;
     }
     public static boolean compare(String str, String hash) {

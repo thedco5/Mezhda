@@ -30,7 +30,7 @@ import javax.swing.JComponent;
 public class Chatter {
 
     // static Action keyboard;
-    public static JFrame chat_frame, form_frame, change_username_frame, delete_account_frame;
+    public static JFrame chat_frame, form_frame, change_username_frame, delete_account_frame, change_password_frame;
     public static JPanel main_panel;
     public static JTextField field;
     public static JTextPane text;
@@ -44,7 +44,6 @@ public class Chatter {
     public static Border padding;
     public static ButtonListener button_listener;
     public static MenuListener menu_listener;
-    public static Database database;
 
     public static String prev_update;
     
@@ -65,7 +64,7 @@ public class Chatter {
         padding = BorderFactory.createEmptyBorder(5, 5, 5, 5);
         button_listener = new ButtonListener();
         menu_listener = new MenuListener();
-        database = new Database();
+        new Database();
 
         /* TOP LABEL AND FIELD*/
         label = new Label(" label ");
@@ -88,14 +87,12 @@ public class Chatter {
                     StringBuilder strbr = new StringBuilder(""); // Document format
                     try {
                         while (rs.next()) strbr.append(rs.getString("username") + ": " + rs.getString("password") + "\n");
-                    } catch (Exception e) {
-                        System.err.println(e.getLocalizedMessage());
-                    }
+                    } catch (Exception e) { e.printStackTrace(); }
                     String str = strbr.toString();
                     if (!str.equals(prev_update)) text.setText(str);
                     prev_update = new String(str);
                     try { Thread.sleep(100); } // updates every tenth of a second
-                    catch (Exception e) { }
+                    catch (Exception e) { e.printStackTrace(); }
                 }
             }
         }).start();
@@ -155,7 +152,7 @@ public class Chatter {
         });
 
         /* WINDOWS */
-        form_frame = new Form();
+        form_frame = new LogForm();
         chat_frame = new JFrame("Chatter");
         // chat_frame.setVisible(true);
         chat_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
