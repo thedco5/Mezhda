@@ -1,4 +1,4 @@
-package util;
+package acts;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,13 +8,9 @@ import javax.swing.JOptionPane;
 
 import forms.*;
 import src.*;
+import util.*;
 
 public class ButtonListener implements ActionListener {
-
-    public static final String REGISTER = "Reg";
-    public static final String LOG_IN = "LI";
-    public static final String SIGN_OUT = "SO";
-    
     @Override
     public void actionPerformed(ActionEvent ae) {
         switch (ae.getActionCommand()) {
@@ -57,23 +53,7 @@ public class ButtonListener implements ActionListener {
                     }  
                 } catch (Exception e) { System.err.println(e.getLocalizedMessage()); }
             }
-            case "Sign out" -> {
-                Chatter.user_id = 0;
-                Chatter.chat_frame.dispose();
-                Chatter.form_frame.setVisible(true);
-            }
-            case "Delete account" -> {
-                Chatter.chat_frame.dispose();
-                Chatter.delete_account_frame = new DeleteAccount();
-            }
             case "Change username" -> {
-                Chatter.chat_frame.setVisible(false);
-                Chatter.change_username_frame = new ChangeUsername();
-            }
-            case "Change password" -> {
-                
-            }
-            case "Confirm username change" -> {
                 String username = ChangeUsername.new_username_field.getText();
                 String password = new String(ChangeUsername.password_field.getPassword());
                 if (!Utility.checkRegex(username, password)) break;
@@ -96,7 +76,7 @@ public class ButtonListener implements ActionListener {
                     } else JOptionPane.showMessageDialog(null, "Usernames don't match", "Error!", JOptionPane.ERROR_MESSAGE);
                 } catch (Exception e) { System.err.println(e.getLocalizedMessage()); }
             }
-            case "Delete account confirmed" -> {
+            case "Delete account" -> {
                 String password = new String(DeleteAccount.password_field.getPassword());
                 if (!Utility.checkRegex(password, password)) break;
                 try {

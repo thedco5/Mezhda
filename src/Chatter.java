@@ -20,6 +20,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 
+import acts.*;
 import forms.*;
 import comps.*;
 import util.*;
@@ -42,6 +43,7 @@ public class Chatter {
     public static Font font;
     public static Border padding;
     public static ButtonListener button_listener;
+    public static MenuListener menu_listener;
     public static Database database;
 
     public static String prev_update;
@@ -62,6 +64,7 @@ public class Chatter {
         /* OTHER */
         padding = BorderFactory.createEmptyBorder(5, 5, 5, 5);
         button_listener = new ButtonListener();
+        menu_listener = new MenuListener();
         database = new Database();
 
         /* TOP LABEL AND FIELD*/

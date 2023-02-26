@@ -10,7 +10,7 @@ public class MenuItem extends JMenuItem {
         setText(str);
         setBorderPainted(false);
         Utility.makeDefaults(this);
-        addActionListener(Chatter.button_listener);
+        addActionListener(Chatter.menu_listener);
     }
     public MenuItem (String str, int ke) {
         this(str);

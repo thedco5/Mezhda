@@ -39,7 +39,7 @@ public class DeleteAccount extends JFrame {
 
         /* BUTTONS */
         confirm_button = new Button("Confirm");
-        confirm_button.setActionCommand("Delete account confirmed");
+        confirm_button.setActionCommand("Delete account");
         button_panel = new Panel(new FlowLayout(FlowLayout.CENTER));
         button_panel.add(confirm_button);
 

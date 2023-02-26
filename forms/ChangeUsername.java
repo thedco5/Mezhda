@@ -62,7 +62,7 @@ public class ChangeUsername extends JFrame {
 
         /* BUTTONS */
         confirm_button = new Button("Confirm");
-        confirm_button.setActionCommand("Confirm username change");
+        confirm_button.setActionCommand("Change username");
         button_panel = new Panel(new FlowLayout(FlowLayout.CENTER));
         button_panel.add(confirm_button);
 
