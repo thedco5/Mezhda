@@ -10,6 +10,11 @@ import forms.*;
 import src.*;
 
 public class ButtonListener implements ActionListener {
+
+    public static final String REGISTER = "Reg";
+    public static final String LOG_IN = "LI";
+    public static final String SIGN_OUT = "SO";
+    
     @Override
     public void actionPerformed(ActionEvent ae) {
         switch (ae.getActionCommand()) {
