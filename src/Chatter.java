@@ -46,6 +46,7 @@ public class Chatter {
 
     public static String prev_update;
     
+    public static final String IMG_URL = "imgs/icon.png";
     public static int user_id;
     public static boolean full_screen;
     public static GraphicsDevice gr_dev = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
@@ -94,7 +95,7 @@ public class Chatter {
         delete_profile_mi.setForeground(Color.RED.darker()); 
 
         /* WINDOW MENU */
-        screen_size_mi = new MenuItem("___×___ px", KeyEvent.VK_X);
+        screen_size_mi = new MenuItem("0×0 px", KeyEvent.VK_X);
         screen_size_mi.setActionCommand("Screen size");
         screen_size_mi.setForeground(Color.GRAY);
         fullscreen_mi = new MenuItem("Toggle fullscreen", KeyEvent.VK_T);
@@ -152,7 +153,7 @@ public class Chatter {
         chat_frame = new JFrame("Chatter");
         // chat_frame.setVisible(true);
         chat_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        chat_frame.setIconImage(new ImageIcon("imgs/icon.png").getImage());
+        chat_frame.setIconImage(new ImageIcon(IMG_URL).getImage());
         // chat_frame.setResizable(false);
         chat_frame.add(main_panel);
         chat_frame.pack();
