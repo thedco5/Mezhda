@@ -5,7 +5,9 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
 import java.awt.GraphicsDevice;
 
@@ -30,12 +32,13 @@ public class Chatter {
 
     // static Action keyboard;
     public static JFrame chat_frame, form_frame, change_username_frame, delete_account_frame, change_password_frame;
-    public static JPanel main_panel;
+    public static JPanel main_panel, side_panel;
     public static JTextField field;
     public static JTextPane text;
 
     public static Label label;
     public static MenuBar menu_bar;
+    public static SideMenu side_menu;
     public static Menu profile_menu, change_profile_sm, window_menu;
     public static MenuItem username_mi, change_username_mi, change_password_mi, delete_profile_mi, sign_out_mi, fullscreen_mi, minimize_mi, screen_size_mi;
 
@@ -54,12 +57,12 @@ public class Chatter {
     public static void main(String[] args) {
 
         /* CUSTOM FONT */
-        /* try {
+        try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Lexend.ttf")));
             font = new Font("Lexend", Font.PLAIN, 20);
-        } catch (Exception e) { font = new Font("Arial", Font.PLAIN, 20); } */
-        font = new Font("Arial", Font.PLAIN, 20);
+        } catch (Exception e) { font = new Font("Arial", Font.PLAIN, 20); } 
+        // font = new Font("Arial", Font.PLAIN, 20);
 
         /* OTHER */
         padding = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -99,7 +102,9 @@ public class Chatter {
         screen_size_mi.setActionCommand("Screen size");
         screen_size_mi.setForeground(Color.GRAY);
         fullscreen_mi = new MenuItem("Toggle fullscreen", KeyEvent.VK_T);
+        fullscreen_mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));
         minimize_mi = new MenuItem("Minimise window", KeyEvent.VK_M);
+        minimize_mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
         window_menu = new Menu("Window", KeyEvent.VK_W);
         window_menu.add(screen_size_mi);
         window_menu.add(fullscreen_mi);
@@ -111,7 +116,7 @@ public class Chatter {
         profile_menu.add(change_profile_sm);
         profile_menu.add(sign_out_mi);
         profile_menu.add(delete_profile_mi);
-        Menu menu_pipe = new Menu("I");
+        Menu menu_pipe = new Menu("|");
         menu_pipe.setEnabled(false);
 
         /* TOP MENU */
@@ -121,12 +126,25 @@ public class Chatter {
         menu_bar.add(window_menu);
         menu_bar.setSize(label_height * 30, label_height);
 
+        /* SIDE MENU */
+        side_menu = new SideMenu();
+        GroupButton group_button = new GroupButton("chats");
+        group_button.setEnabled(false);
+        // group_button.setBorder(padding);
+        side_menu.add(group_button);
+        side_menu.add(new GroupButton("group01"));
+        side_menu.add(new GroupButton("hej!"));
+        side_panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        side_panel.setBackground(new Color(0xeeeeee));
+        side_panel.add(side_menu);
+
         /* MAIN PANEL */
         main_panel = new JPanel();
         main_panel.setLayout(new BorderLayout());
         main_panel.setPreferredSize(new Dimension(label_height * 30, label_height * 20));
         main_panel.setFocusable(false);
         main_panel.add(menu_bar, BorderLayout.NORTH);
+        main_panel.add(side_panel, BorderLayout.WEST);
         main_panel.add(label, BorderLayout.SOUTH);
         main_panel.add(text, BorderLayout.CENTER);
 
