@@ -88,7 +88,7 @@ public class ChangePassword extends JFrame {
             public void windowActivated(WindowEvent e) { }
             public void windowDeactivated(WindowEvent e) { }
         });
-        setIconImage(new ImageIcon("imgs/icon.png").getImage());
+        setIconImage(new ImageIcon(Chatter.IMG_URL).getImage());
         setResizable(false);
         getRootPane().setDefaultButton(confirm_button);
         add(main_panel);

@@ -67,7 +67,7 @@ public class LogForm extends JFrame {
         /* WINDOW */
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setIconImage(new ImageIcon("imgs/icon.png").getImage());
+        setIconImage(new ImageIcon(Chatter.IMG_URL).getImage());
         setResizable(false);
         getRootPane().setDefaultButton(login_button);
         add(main_panel);
