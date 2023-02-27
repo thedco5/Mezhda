@@ -1,7 +1,5 @@
 package src;
 
-import java.io.File;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -38,8 +36,8 @@ public class Chatter {
 
     public static Label label;
     public static MenuBar menu_bar;
-    public static Menu profile_menu, change_profile_sm;
-    public static MenuItem username_mi, change_username_mi, change_password_mi, delete_profile_mi, sign_out_mi;
+    public static Menu profile_menu, change_profile_sm, window_menu;
+    public static MenuItem username_mi, change_username_mi, change_password_mi, delete_profile_mi, sign_out_mi, fullscreen_mi, minimize_mi, screen_size_mi;
 
     public static Font font;
     public static Border padding;
@@ -55,11 +53,12 @@ public class Chatter {
     public static void main(String[] args) {
 
         /* CUSTOM FONT */
-        try {
+        /* try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("fonts/.ttf")));
-            font = new Font("", Font.PLAIN, 20);
-        } catch (Exception e) { font = new Font("Arial", Font.PLAIN, 20); }
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Lexend.ttf")));
+            font = new Font("Lexend", Font.PLAIN, 20);
+        } catch (Exception e) { font = new Font("Arial", Font.PLAIN, 20); } */
+        font = new Font("Arial", Font.PLAIN, 20);
 
         /* OTHER */
         padding = BorderFactory.createEmptyBorder(5, 5, 5, 5);
@@ -82,7 +81,7 @@ public class Chatter {
         /* UPDATING THE MESSAGES */
         new Thread(new Updater()).start();
 
-        /* TOP MENU */
+        /* PROFILE MENU */
         username_mi = new MenuItem(" - ");
         username_mi.setEnabled(false);
         change_username_mi = new MenuItem("Change username", KeyEvent.VK_U);
@@ -94,6 +93,18 @@ public class Chatter {
         delete_profile_mi = new MenuItem("Delete account", KeyEvent.VK_D);
         delete_profile_mi.setForeground(Color.RED.darker()); 
 
+        /* WINDOW MENU */
+        screen_size_mi = new MenuItem("___×___ px", KeyEvent.VK_X);
+        screen_size_mi.setActionCommand("Screen size");
+        screen_size_mi.setForeground(Color.GRAY);
+        fullscreen_mi = new MenuItem("Toggle fullscreen", KeyEvent.VK_T);
+        minimize_mi = new MenuItem("Minimise window", KeyEvent.VK_M);
+        window_menu = new Menu("Window", KeyEvent.VK_W);
+        window_menu.add(screen_size_mi);
+        window_menu.add(fullscreen_mi);
+        window_menu.add(minimize_mi);
+
+        /* MENU TABS */
         profile_menu = new Menu("Profile", KeyEvent.VK_P);
         profile_menu.add(username_mi);
         profile_menu.add(change_profile_sm);
@@ -102,10 +113,12 @@ public class Chatter {
         Menu menu_pipe = new Menu("I");
         menu_pipe.setEnabled(false);
 
+        /* TOP MENU */
         menu_bar = new MenuBar();
         menu_bar.add(profile_menu);
         menu_bar.add(menu_pipe);
-        menu_bar.setBounds(0, 0, label_height * 30, label_height);
+        menu_bar.add(window_menu);
+        menu_bar.setSize(label_height * 30, label_height);
 
         /* MAIN PANEL */
         main_panel = new JPanel();
@@ -120,10 +133,8 @@ public class Chatter {
         main_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("F11"), "f11");
         main_panel.getActionMap().put("f11", new AbstractAction() {
             @Override
-            public void actionPerformed(ActionEvent e) {
-                full_screen = !full_screen;
-                if (full_screen) gr_dev.setFullScreenWindow(chat_frame);
-                else gr_dev.setFullScreenWindow(null);
+            public void actionPerformed(ActionEvent ae) {
+                menu_listener.actionPerformed(new ActionEvent(this, 0, "Toggle fullscreen"));
             }
         });
 
