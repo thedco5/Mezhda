@@ -45,7 +45,7 @@ public class Database {
         return 0;
     }
     public static String getUsername(int id) {
-        try ( ResultSet rs = query("SELECT * FROM users WHERE id LIKE " + id + ";") ) {
+        try ( ResultSet rs = query("SELECT username FROM users WHERE id LIKE " + id + ";") ) {
             if (rs.next()) return rs.getString("username");
         } catch (Exception e) { e.printStackTrace(); }
         return null;

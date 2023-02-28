@@ -10,12 +10,15 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
 import java.awt.GraphicsDevice;
+import java.awt.ComponentOrientation;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -137,9 +140,30 @@ public class Chatter {
         side_menu.add(group_button);
         side_menu.add(new GroupButton("group01"));
         side_menu.add(new GroupButton("hej!"));
+        side_menu.add(new GroupButton("group02"));
+        side_menu.add(new GroupButton("group12"));
+        side_menu.add(new GroupButton("notes"));
+        side_menu.add(new GroupButton("test"));
+        side_menu.add(new GroupButton("test1"));
+        side_menu.add(new GroupButton("test_A"));
+        side_menu.add(new GroupButton("c'mon"));
         side_panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         side_panel.setBackground(new Color(0xeeeeee));
         side_panel.add(side_menu);
+
+        /* GROUP SCROLL BAR */
+        JScrollBar scroll_bar = new JScrollBar();
+        scroll_bar.setUI(new Scroll());
+        scroll_bar.setUnitIncrement((int) groups_menu.getComponent().getPreferredSize().getHeight());
+        scroll_bar.setBackground(Color.WHITE);
+        scroll_bar.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 2, Color.LIGHT_GRAY));
+        JScrollPane scroll_pane = new JScrollPane();
+        scroll_pane.setViewportView(side_panel);
+        scroll_pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        scroll_pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        scroll_pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        scroll_pane.setVerticalScrollBar(scroll_bar);
+        scroll_pane.setBorder(BorderFactory.createEmptyBorder());
 
         /* MAIN PANEL */
         main_panel = new JPanel();
@@ -147,7 +171,7 @@ public class Chatter {
         main_panel.setPreferredSize(new Dimension(label_height * 30, label_height * 20));
         main_panel.setFocusable(false);
         main_panel.add(menu_bar, BorderLayout.NORTH);
-        main_panel.add(side_panel, BorderLayout.WEST);
+        main_panel.add(scroll_pane, BorderLayout.WEST);
         main_panel.add(label, BorderLayout.SOUTH);
         main_panel.add(text, BorderLayout.CENTER);
 
@@ -172,7 +196,7 @@ public class Chatter {
         /* WINDOWS */
         form_frame = new LogForm();
         chat_frame = new JFrame("Chatter");
-        // chat_frame.setVisible(true);
+        chat_frame.setVisible(true);
         chat_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         chat_frame.setIconImage(new ImageIcon(IMG_URL).getImage());
         // chat_frame.setResizable(false);
