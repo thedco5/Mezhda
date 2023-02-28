@@ -13,6 +13,6 @@ public class Button extends JButton {
         setFont(Chatter.font);
         setBackground(Color.LIGHT_GRAY);
         setBorderPainted(false);
-        addActionListener(Chatter.button_listener);
+        addActionListener(Chatter.button_listener); // check whether a button is pressed
     }
 }

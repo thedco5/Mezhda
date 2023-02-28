@@ -28,6 +28,9 @@ public class Database {
         } catch (Exception e) { e.printStackTrace(); }
         return null;
     }
+
+    /* UTILS */
+    
     public static ResultSet selectFromUsers(String username) {
         return query("SELECT * FROM users WHERE username LIKE '" + username + "';");
     }

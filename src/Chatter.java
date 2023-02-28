@@ -39,7 +39,7 @@ public class Chatter {
     public static Label label;
     public static MenuBar menu_bar;
     public static SideMenu side_menu;
-    public static Menu profile_menu, change_profile_sm, window_menu;
+    public static Menu profile_menu, change_profile_sm, groups_menu, window_menu;
     public static MenuItem username_mi, change_username_mi, change_password_mi, delete_profile_mi, sign_out_mi, fullscreen_mi, minimize_mi, screen_size_mi;
 
     public static Font font;
@@ -97,6 +97,9 @@ public class Chatter {
         delete_profile_mi = new MenuItem("Delete account", KeyEvent.VK_D);
         delete_profile_mi.setForeground(Color.RED.darker()); 
 
+        /* GROUPS MENU */
+        groups_menu = new Menu("Groups", KeyEvent.VK_G);
+
         /* WINDOW MENU */
         screen_size_mi = new MenuItem("0×0 px", KeyEvent.VK_X);
         screen_size_mi.setActionCommand("Screen size");
@@ -116,13 +119,13 @@ public class Chatter {
         profile_menu.add(change_profile_sm);
         profile_menu.add(sign_out_mi);
         profile_menu.add(delete_profile_mi);
-        Menu menu_pipe = new Menu("|");
-        menu_pipe.setEnabled(false);
 
         /* TOP MENU */
         menu_bar = new MenuBar();
         menu_bar.add(profile_menu);
-        menu_bar.add(menu_pipe);
+        menu_bar.add(new MenuPipe());
+        menu_bar.add(groups_menu);
+        menu_bar.add(new MenuPipe());
         menu_bar.add(window_menu);
         menu_bar.setSize(label_height * 30, label_height);
 

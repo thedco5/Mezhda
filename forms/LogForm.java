@@ -72,6 +72,6 @@ public class LogForm extends JFrame {
         getRootPane().setDefaultButton(login_button);
         add(main_panel);
         pack();
-        setLocationRelativeTo(null);
+        setLocationRelativeTo(null); // centers window
     }
 }
