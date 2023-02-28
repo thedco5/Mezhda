@@ -94,7 +94,7 @@ public class Chatter {
         change_profile_sm.add(change_username_mi);
         change_profile_sm.add(change_password_mi);
         sign_out_mi = new MenuItem("Sign out", KeyEvent.VK_S);
-        delete_profile_mi = new MenuItem("Delete account", KeyEvent.VK_D);
+        delete_profile_mi = new MenuItem("Delete account");
         delete_profile_mi.setForeground(Color.RED.darker()); 
 
         /* GROUPS MENU */
