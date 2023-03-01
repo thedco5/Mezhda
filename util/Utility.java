@@ -5,6 +5,8 @@ import src.*;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 
+import menus.ProfileMenu;
+
 import java.awt.Color;
 
 
@@ -14,7 +16,7 @@ public class Utility {
         component.setFont(Chatter.font);
     }
     public static void setUser(String username) {
-        Chatter.profile_menu.username_mi.setText(username);
+        ProfileMenu.username_mi.setText(username);
         Chatter.chat_frame.setVisible(true);
     }
     public static boolean checkRegex(String username, String password) {
