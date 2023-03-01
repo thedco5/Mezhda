@@ -93,12 +93,6 @@ public class Chatter {
         /* UPDATING THE MESSAGES */
         new Thread(new Updater()).start();
 
-        /* PROFILE MENU */
-        
-
-        /* GROUPS MENU */
-        groups_menu = new Menu("Groups", KeyEvent.VK_G);
-
         /* WINDOW MENU */
         screen_size_mi = new MenuItem("0×0 px", KeyEvent.VK_X);
         screen_size_mi.setActionCommand("Screen size");
@@ -112,14 +106,11 @@ public class Chatter {
         window_menu.add(fullscreen_mi);
         window_menu.add(minimize_mi);
 
-        /* MENU TABS */
-        profile_menu = new ProfileMenu("Profile", KeyEvent.VK_P);
-
         /* TOP MENU */
         menu_bar = new MenuBar();
-        menu_bar.add(profile_menu);
+        menu_bar.add(profile_menu = new ProfileMenu("Profile", KeyEvent.VK_P));
         menu_bar.add(new MenuPipe());
-        menu_bar.add(groups_menu);
+        menu_bar.add(groups_menu = new Menu("Groups", KeyEvent.VK_G));
         menu_bar.add(new MenuPipe());
         menu_bar.add(window_menu);
         menu_bar.setSize(label_height * 30, label_height);
