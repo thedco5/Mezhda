@@ -11,6 +11,7 @@ import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
 import java.awt.GraphicsDevice;
 import java.awt.ComponentOrientation;
+import java.awt.Graphics;
 
 import javax.swing.AbstractAction;
 import javax.swing.BorderFactory;
@@ -19,10 +20,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
-import javax.swing.JTextPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicSplitPaneDivider;
+import javax.swing.plaf.basic.BasicSplitPaneUI;
 
 import acts.*;
 import forms.*;
@@ -37,9 +40,12 @@ public class Chatter {
     public static JFrame chat_frame, form_frame, change_username_frame, delete_account_frame, change_password_frame;
     public static JPanel main_panel, side_panel;
     public static JTextField field;
-    public static JTextPane text;
+    public static JScrollPane scroll_pane;
+    public static JScrollBar scroll_bar;
+    public static JSplitPane split_pane;
 
     public static Label label;
+    public static TextPane text;
     public static MenuBar menu_bar;
     public static SideMenu side_menu;
     public static Menu profile_menu, change_profile_sm, groups_menu, window_menu;
@@ -77,13 +83,10 @@ public class Chatter {
         label = new Label(" label ");
         label.setLocation(0, 24);
         int label_height = (int) label.getPreferredSize().getHeight();
-        label.setSize(new Dimension(label_height * 30, label_height));
+        label.setPreferredSize(new Dimension(label_height * 30, label_height));
 
         /* MESSAGES AREA */
-        text = new JTextPane();
-        text.setFont(font);
-        text.setSize(label_height * 30, label_height * 18);
-        text.setEditable(false);
+        text = new TextPane();
 
         /* UPDATING THE MESSAGES */
         new Thread(new Updater()).start();
@@ -152,28 +155,48 @@ public class Chatter {
         side_panel.add(side_menu);
 
         /* GROUP SCROLL BAR */
-        JScrollBar scroll_bar = new JScrollBar();
+        scroll_bar = new JScrollBar();
         scroll_bar.setUI(new Scroll());
         scroll_bar.setUnitIncrement((int) groups_menu.getComponent().getPreferredSize().getHeight());
         scroll_bar.setBackground(Color.WHITE);
         scroll_bar.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 2, Color.LIGHT_GRAY));
-        JScrollPane scroll_pane = new JScrollPane();
+        scroll_pane = new JScrollPane();
         scroll_pane.setViewportView(side_panel);
         scroll_pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scroll_pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         scroll_pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
         scroll_pane.setVerticalScrollBar(scroll_bar);
         scroll_pane.setBorder(BorderFactory.createEmptyBorder());
+        scroll_pane.setPreferredSize(scroll_pane.getPreferredSize());
+
+        /* SPLIT PANE */
+        split_pane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll_pane, text);
+        split_pane.setDividerSize((int) scroll_bar.getPreferredSize().getWidth() / 2);
+        split_pane.setDividerLocation((int) scroll_pane.getPreferredSize().getWidth());
+        split_pane.setContinuousLayout(true);
+        split_pane.setUI(new BasicSplitPaneUI() {
+            public BasicSplitPaneDivider createDefaultDivider() {
+                return new BasicSplitPaneDivider(this) {                
+                    public void setBorder(Border b) { }
+                    public void paint(Graphics g) {
+                        g.setColor(new Color(0xeeeeee));
+                        g.fillRect(0, 0, getSize().width, getSize().height);
+                        super.paint(g);
+                    }
+                };
+            }
+        });
 
         /* MAIN PANEL */
         main_panel = new JPanel();
         main_panel.setLayout(new BorderLayout());
-        main_panel.setPreferredSize(new Dimension(label_height * 30, label_height * 20));
+        // main_panel.setPreferredSize(new Dimension(label_height * 30, label_height * 20));
         main_panel.setFocusable(false);
         main_panel.add(menu_bar, BorderLayout.NORTH);
-        main_panel.add(scroll_pane, BorderLayout.WEST);
         main_panel.add(label, BorderLayout.SOUTH);
-        main_panel.add(text, BorderLayout.CENTER);
+        // main_panel.add(scroll_pane, BorderLayout.WEST);
+        // main_panel.add(text, BorderLayout.CENTER);
+        main_panel.add(split_pane);
 
         /* FULL SCREEN */
         main_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("F11"), "f11");
