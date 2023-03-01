@@ -1,4 +1,4 @@
-package comps;
+package menus;
 
 import javax.swing.JMenuItem;
 

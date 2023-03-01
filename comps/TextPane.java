@@ -12,13 +12,14 @@ public class TextPane extends JTextPane {
         setPreferredSize(getPreferredSize());
         setEditable(false);
     }
-    
+
     @Override
     public Dimension getMinimumSize() {
         int height = (int) getSize().getHeight();
         int width = (int) (Chatter.chat_frame.getSize().getWidth());
         width -= Chatter.scroll_pane.getPreferredSize().getWidth();
-        width -= Chatter.scroll_bar.getWidth();
+        if (!Chatter.full_screen)
+            width -= Chatter.scroll_bar.getWidth();
         width -= Chatter.split_pane.getDividerSize();
         if (width < Chatter.scroll_pane.getPreferredSize().getWidth())
             width = (int) Chatter.scroll_pane.getPreferredSize().getWidth();

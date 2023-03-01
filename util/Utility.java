@@ -14,7 +14,7 @@ public class Utility {
         component.setFont(Chatter.font);
     }
     public static void setUser(String username) {
-        Chatter.username_mi.setText(username);
+        Chatter.profile_menu.username_mi.setText(username);
         Chatter.chat_frame.setVisible(true);
     }
     public static boolean checkRegex(String username, String password) {

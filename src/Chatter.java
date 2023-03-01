@@ -29,6 +29,7 @@ import javax.swing.plaf.basic.BasicSplitPaneUI;
 
 import acts.*;
 import forms.*;
+import menus.*;
 import comps.*;
 import util.*;
 
@@ -48,8 +49,9 @@ public class Chatter {
     public static TextPane text;
     public static MenuBar menu_bar;
     public static SideMenu side_menu;
-    public static Menu profile_menu, change_profile_sm, groups_menu, window_menu;
-    public static MenuItem username_mi, change_username_mi, change_password_mi, delete_profile_mi, sign_out_mi, fullscreen_mi, minimize_mi, screen_size_mi;
+    public static ProfileMenu profile_menu;
+    public static Menu groups_menu, window_menu;
+    public static MenuItem fullscreen_mi, minimize_mi, screen_size_mi;
 
     public static Font font;
     public static Border padding;
@@ -92,16 +94,7 @@ public class Chatter {
         new Thread(new Updater()).start();
 
         /* PROFILE MENU */
-        username_mi = new MenuItem(" - ");
-        username_mi.setEnabled(false);
-        change_username_mi = new MenuItem("Change username", KeyEvent.VK_U);
-        change_password_mi = new MenuItem("Change password", KeyEvent.VK_P);
-        change_profile_sm = new Menu("Change profile", KeyEvent.VK_C);
-        change_profile_sm.add(change_username_mi);
-        change_profile_sm.add(change_password_mi);
-        sign_out_mi = new MenuItem("Sign out", KeyEvent.VK_S);
-        delete_profile_mi = new MenuItem("Delete account");
-        delete_profile_mi.setForeground(Color.RED.darker()); 
+        
 
         /* GROUPS MENU */
         groups_menu = new Menu("Groups", KeyEvent.VK_G);
@@ -120,11 +113,7 @@ public class Chatter {
         window_menu.add(minimize_mi);
 
         /* MENU TABS */
-        profile_menu = new Menu("Profile", KeyEvent.VK_P);
-        profile_menu.add(username_mi);
-        profile_menu.add(change_profile_sm);
-        profile_menu.add(sign_out_mi);
-        profile_menu.add(delete_profile_mi);
+        profile_menu = new ProfileMenu("Profile", KeyEvent.VK_P);
 
         /* TOP MENU */
         menu_bar = new MenuBar();
@@ -160,6 +149,7 @@ public class Chatter {
         scroll_bar.setUnitIncrement((int) groups_menu.getComponent().getPreferredSize().getHeight());
         scroll_bar.setBackground(Color.WHITE);
         scroll_bar.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 2, Color.LIGHT_GRAY));
+        scroll_bar.setPreferredSize(scroll_bar.getPreferredSize());
         scroll_pane = new JScrollPane();
         scroll_pane.setViewportView(side_panel);
         scroll_pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -219,7 +209,7 @@ public class Chatter {
         /* WINDOWS */
         form_frame = new LogForm();
         chat_frame = new JFrame("Chatter");
-        chat_frame.setVisible(true);
+        // chat_frame.setVisible(true);
         chat_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         chat_frame.setIconImage(new ImageIcon(IMG_URL).getImage());
         // chat_frame.setResizable(false);
