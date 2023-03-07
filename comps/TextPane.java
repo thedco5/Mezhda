@@ -17,12 +17,12 @@ public class TextPane extends JTextPane {
     public Dimension getMinimumSize() {
         int height = (int) getSize().getHeight();
         int width = (int) (Chatter.chat_frame.getSize().getWidth());
-        width -= Chatter.scroll_pane.getPreferredSize().getWidth();
+        width -= Chatter.group_scroll_pane.getPreferredSize().getWidth();
         if (!Chatter.full_screen)
-            width -= Chatter.scroll_bar.getWidth();
+            width -= Chatter.group_scroll_bar.getWidth();
         width -= Chatter.split_pane.getDividerSize();
-        if (width < Chatter.scroll_pane.getPreferredSize().getWidth())
-            width = (int) Chatter.scroll_pane.getPreferredSize().getWidth();
+        if (width < Chatter.group_scroll_pane.getPreferredSize().getWidth())
+            width = (int) Chatter.group_scroll_pane.getPreferredSize().getWidth();
         return new Dimension(width, height);
     }
 }

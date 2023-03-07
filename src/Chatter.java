@@ -1,6 +1,7 @@
 package src;
 
 import java.awt.Color;
+import java.awt.ComponentOrientation;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -10,7 +11,6 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GraphicsEnvironment;
 import java.awt.GraphicsDevice;
-import java.awt.ComponentOrientation;
 import java.awt.Graphics;
 
 import javax.swing.AbstractAction;
@@ -18,8 +18,6 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -41,8 +39,6 @@ public class Chatter {
     public static JFrame chat_frame, form_frame, change_username_frame, delete_account_frame, change_password_frame;
     public static JPanel main_panel, side_panel;
     public static JTextField field;
-    public static JScrollPane scroll_pane;
-    public static JScrollBar scroll_bar;
     public static JSplitPane split_pane;
 
     public static Label label;
@@ -52,14 +48,17 @@ public class Chatter {
     public static ProfileMenu profile_menu;
     public static Menu groups_menu, window_menu;
     public static MenuItem fullscreen_mi, minimize_mi, screen_size_mi;
+    public static ScrollBar group_scroll_bar, text_scroll_bar;
+    public static ScrollPane group_scroll_pane, text_scroll_pane;
 
     public static Font font;
     public static Border padding;
     public static ButtonListener button_listener;
     public static MenuListener menu_listener;
+    public static GroupListener group_listener;
 
     public static String prev_update;
-    
+
     public static final String IMG_URL = "imgs/icon.png";
     public static int user_id;
     public static boolean full_screen;
@@ -72,16 +71,19 @@ public class Chatter {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Lexend.ttf")));
             font = new Font("Lexend", Font.PLAIN, 20);
-        } catch (Exception e) { font = new Font("Arial", Font.PLAIN, 20); } 
+        } catch (Exception e) {
+            font = new Font("Arial", Font.PLAIN, 20);
+        }
         // font = new Font("Arial", Font.PLAIN, 20);
 
         /* OTHER */
         padding = BorderFactory.createEmptyBorder(5, 5, 5, 5);
         button_listener = new ButtonListener();
         menu_listener = new MenuListener();
+        group_listener = new GroupListener();
         new Database();
 
-        /* TOP LABEL AND FIELD*/
+        /* TOP LABEL AND FIELD */
         label = new Label(" label ");
         label.setLocation(0, 24);
         int label_height = (int) label.getPreferredSize().getHeight();
@@ -89,9 +91,6 @@ public class Chatter {
 
         /* MESSAGES AREA */
         text = new TextPane();
-
-        /* UPDATING THE MESSAGES */
-        new Thread(new Updater()).start();
 
         /* WINDOW MENU */
         screen_size_mi = new MenuItem("0×0 px", KeyEvent.VK_X);
@@ -116,49 +115,34 @@ public class Chatter {
         menu_bar.setSize(label_height * 30, label_height);
 
         /* SIDE MENU */
-        side_menu = new SideMenu();
-        GroupButton group_button = new GroupButton("chats");
-        group_button.setEnabled(false);
-        // group_button.setBorder(padding);
-        side_menu.add(group_button);
-        side_menu.add(new GroupButton("group01"));
-        side_menu.add(new GroupButton("hej!"));
-        side_menu.add(new GroupButton("group02"));
-        side_menu.add(new GroupButton("group12"));
-        side_menu.add(new GroupButton("notes"));
-        side_menu.add(new GroupButton("test"));
-        side_menu.add(new GroupButton("test1"));
-        side_menu.add(new GroupButton("test_A"));
-        side_menu.add(new GroupButton("c'mon"));
+        side_menu = new SideMenu(); 
+        side_menu.refreshGroups();
         side_panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         side_panel.setBackground(new Color(0xeeeeee));
         side_panel.add(side_menu);
 
         /* GROUP SCROLL BAR */
-        scroll_bar = new JScrollBar();
-        scroll_bar.setUI(new Scroll());
-        scroll_bar.setUnitIncrement((int) groups_menu.getComponent().getPreferredSize().getHeight());
-        scroll_bar.setBackground(Color.WHITE);
-        scroll_bar.setBorder(BorderFactory.createMatteBorder(0, 2, 0, 2, Color.LIGHT_GRAY));
-        scroll_bar.setPreferredSize(scroll_bar.getPreferredSize());
-        scroll_pane = new JScrollPane();
-        scroll_pane.setViewportView(side_panel);
-        scroll_pane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        scroll_pane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        scroll_pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-        scroll_pane.setVerticalScrollBar(scroll_bar);
-        scroll_pane.setBorder(BorderFactory.createEmptyBorder());
-        scroll_pane.setPreferredSize(scroll_pane.getPreferredSize());
+        group_scroll_bar = new ScrollBar();
+        text_scroll_bar = new ScrollBar();
+        group_scroll_pane = new ScrollPane(side_panel, group_scroll_bar);
+        group_scroll_pane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+        text_scroll_pane = new ScrollPane(text, text_scroll_bar) {
+            public Dimension getMinimumSize() {
+                return text.getMinimumSize();
+            }
+        };
 
         /* SPLIT PANE */
-        split_pane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scroll_pane, text);
-        split_pane.setDividerSize((int) scroll_bar.getPreferredSize().getWidth() / 2);
-        split_pane.setDividerLocation((int) scroll_pane.getPreferredSize().getWidth());
+        split_pane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, group_scroll_pane, text_scroll_pane);
+        split_pane.setDividerSize((int) group_scroll_bar.getPreferredSize().getWidth() / 2);
+        split_pane.setDividerLocation((int) group_scroll_pane.getPreferredSize().getWidth());
         split_pane.setContinuousLayout(true);
         split_pane.setUI(new BasicSplitPaneUI() {
             public BasicSplitPaneDivider createDefaultDivider() {
-                return new BasicSplitPaneDivider(this) {                
-                    public void setBorder(Border b) { }
+                return new BasicSplitPaneDivider(this) {
+                    public void setBorder(Border b) {
+                    }
+
                     public void paint(Graphics g) {
                         g.setColor(new Color(0xeeeeee));
                         g.fillRect(0, 0, getSize().width, getSize().height);
@@ -171,12 +155,9 @@ public class Chatter {
         /* MAIN PANEL */
         main_panel = new JPanel();
         main_panel.setLayout(new BorderLayout());
-        // main_panel.setPreferredSize(new Dimension(label_height * 30, label_height * 20));
         main_panel.setFocusable(false);
         main_panel.add(menu_bar, BorderLayout.NORTH);
         main_panel.add(label, BorderLayout.SOUTH);
-        // main_panel.add(scroll_pane, BorderLayout.WEST);
-        // main_panel.add(text, BorderLayout.CENTER);
         main_panel.add(split_pane);
 
         /* FULL SCREEN */
@@ -188,7 +169,7 @@ public class Chatter {
             }
         });
 
-        /*  SCREEN MINIMISING */
+        /* SCREEN MINIMISING */
         main_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "esc");
         main_panel.getActionMap().put("esc", new AbstractAction() {
             @Override
@@ -200,13 +181,16 @@ public class Chatter {
         /* WINDOWS */
         form_frame = new LogForm();
         chat_frame = new JFrame("Chatter");
-        // chat_frame.setVisible(true);
+        chat_frame.setVisible(true);
         chat_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         chat_frame.setIconImage(new ImageIcon(IMG_URL).getImage());
         // chat_frame.setResizable(false);
         chat_frame.add(main_panel);
         chat_frame.pack();
         chat_frame.setLocationRelativeTo(null);
+
+        /* UPDATING THE MESSAGES */
+        new Thread(new Updater()).start();
     }
 
 }

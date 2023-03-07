@@ -16,9 +16,8 @@ public class GroupButton extends JButton {
         setFont(Chatter.font);
         setBackground(Color.WHITE);
         setMinimumSize(getMinimumSize());
+        addActionListener(Chatter.group_listener);
         Border border = BorderFactory.createMatteBorder(0, 0, 2, 0, Color.LIGHT_GRAY);
         setBorder(BorderFactory.createCompoundBorder(border, Chatter.padding));
-        // setBorder(Chatter.padding);
-        // addActionListener(Chatter.button_listener);
     }
 }

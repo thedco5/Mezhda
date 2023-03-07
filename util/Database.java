@@ -22,6 +22,7 @@ public class Database {
     }
 
     public static synchronized ResultSet query(String sql) {
+        // if (sql.matches(".*.;.*.;.*.")) return null;
         try {
             if (stmt.execute(sql))
                 return stmt.getResultSet();
