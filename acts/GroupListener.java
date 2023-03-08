@@ -26,12 +26,14 @@ public class GroupListener implements ActionListener {
                     Chatter.group_id = id;
                     GroupMenu.current_group_mi.setText("chat: " + Database.getGroupname(id));
                     GroupMenu.add_to_group_mi.setEnabled(true);
-                    GroupMenu.edit_mi.setEnabled(true);
+                    // GroupMenu.edit_mi.setEnabled(true);
                     GroupMenu.delete_group_mi.setEnabled(true);
                     if (last_painted > 0)
                         Chatter.side_menu.getComponent(last_painted).setBackground(Color.WHITE);
-                    last_painted = Integer.parseInt(command.split(":")[1]);
-                    Chatter.side_menu.getComponent(last_painted).setBackground(Color.LIGHT_GRAY);
+                    int n = Integer.parseInt(command.split(":")[1]);
+                    last_painted = n == last_painted ? 0 : n;
+                    if (last_painted > 0)
+                        Chatter.side_menu.getComponent(last_painted).setBackground(Color.LIGHT_GRAY);
                 } catch (Exception e) { e.printStackTrace(); }
             }
         }
