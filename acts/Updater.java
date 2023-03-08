@@ -18,11 +18,12 @@ public class Updater implements Runnable {
                 // Thread.sleep(1000); // updates every tenth of a second
             } catch (Exception e) { e.printStackTrace(); }
             String username = Database.getUsername(Chatter.user_id);
-            try ( ResultSet rs = Database.query("SELECT * FROM messages WHERE user_id LIKE " + Chatter.user_id + ";") ) {
+            try ( ResultSet rs = Database.query("SELECT * FROM messages WHERE member_id LIKE " + Chatter.user_id + ";") ) {
                 StringBuilder strbr = new StringBuilder(""); // Document format
                 while (rs.next()) strbr.append("@" + username + ": " + rs.getString("message") + "\n");
                 String str = strbr.toString();
                 Chatter.text.setText(Chatter.prev_update + "\n\n" + str);
+                // Chatter.text.setCaretPosition(Chatter.text.getDocument().getLength());
                 Thread.sleep(1000); // updates every tenth of a second
             } catch (Exception e) { e.printStackTrace(); }
         }

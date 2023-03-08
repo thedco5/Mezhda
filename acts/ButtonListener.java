@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
 
-import forms.*;
+import forms.prof.*;
 import src.*;
 import util.*;
 

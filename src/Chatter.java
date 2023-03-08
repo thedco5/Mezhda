@@ -26,7 +26,7 @@ import javax.swing.plaf.basic.BasicSplitPaneDivider;
 import javax.swing.plaf.basic.BasicSplitPaneUI;
 
 import acts.*;
-import forms.*;
+import forms.prof.*;
 import menus.*;
 import comps.*;
 import comps.menus.*;
@@ -35,7 +35,7 @@ import util.*;
 
 import javax.swing.JComponent;
 
-public class Chatter {
+public class Chatter { // ~ 1300 lines fully in this project
 
     // static Action keyboard;
     public static JFrame chat_frame, form_frame, change_username_frame, delete_account_frame, change_password_frame;
@@ -96,7 +96,7 @@ public class Chatter {
         menu_bar = new MenuBar();
         menu_bar.add(profile_menu = new ProfileMenu("Profile", KeyEvent.VK_P));
         menu_bar.add(new MenuPipe());
-        menu_bar.add(groups_menu = new Menu("Groups", KeyEvent.VK_G));
+        menu_bar.add(groups_menu = new GroupMenu("Groups", KeyEvent.VK_G));
         menu_bar.add(new MenuPipe());
         menu_bar.add(window_menu = new WindowMenu("Window", KeyEvent.VK_W));
         menu_bar.setSize(label_height * 30, label_height);

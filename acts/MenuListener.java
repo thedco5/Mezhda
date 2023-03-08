@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
-import forms.*;
+import forms.prof.*;
 import menus.*;
 import src.*;
 
@@ -14,6 +14,7 @@ public class MenuListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         switch (ae.getActionCommand()) {
+            /* PROFILES */
             case "Sign out" -> {
                 Chatter.user_id = 0;
                 Chatter.chat_frame.dispose();
@@ -31,6 +32,20 @@ public class MenuListener implements ActionListener {
                 Chatter.chat_frame.setVisible(false);
                 Chatter.change_password_frame = new ChangePassword();
             }
+            /* GROUP */
+            case "Create new" -> {
+
+            }
+            case "Send request" -> {
+                
+            }
+            case "Edit group" -> {
+                
+            }
+            case "Exit / Delete" -> {
+                
+            }
+            /* WINDOW */
             case "Toggle fullscreen" -> {
                 Chatter.full_screen = !Chatter.full_screen;
                 if (Chatter.full_screen) Chatter.gr_dev.setFullScreenWindow(Chatter.chat_frame);

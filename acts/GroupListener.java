@@ -3,7 +3,9 @@ package acts;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import menus.*;
 import src.*;
+import util.*;
 
 public class GroupListener implements ActionListener {
 
@@ -15,8 +17,13 @@ public class GroupListener implements ActionListener {
                 Chatter.side_menu.refreshGroups(); 
                 Chatter.chat_frame.pack(); 
             }
-            // case NUMBER -> GROUP ID
-            default -> System.out.println(command);
+            default -> {
+                try {
+                    int id = Integer.parseInt(command);
+                    Chatter.group_id = id;
+                    GroupMenu.current_group_mi.setText("current: " + Database.getGroupname(id));
+                } catch (Exception e) { e.printStackTrace(); }
+            }
         }
     }
     

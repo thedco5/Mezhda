@@ -2,6 +2,7 @@ package comps;
 
 import javax.swing.JTextPane;
 import java.awt.Dimension;
+import javax.swing.text.DefaultCaret;
 
 import src.*;
 
@@ -11,6 +12,8 @@ public class TextPane extends JTextPane {
         setFont(Chatter.font);
         setPreferredSize(getPreferredSize());
         setEditable(false);
+        DefaultCaret caret = (DefaultCaret) getCaret();
+        caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
     }
 
     @Override

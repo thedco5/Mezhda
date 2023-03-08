@@ -51,4 +51,10 @@ public class Database {
         } catch (Exception e) { e.printStackTrace(); }
         return null;
     }
+    public static String getGroupname(int id) {
+        try ( ResultSet rs = query("SELECT groupname FROM chatter.groups WHERE id LIKE " + id + ";") ) {
+            if (rs.next()) return rs.getString("groupname");
+        } catch (Exception e) { e.printStackTrace(); }
+        return null;
+    }
 }
