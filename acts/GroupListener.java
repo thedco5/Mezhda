@@ -31,7 +31,7 @@ public class GroupListener implements ActionListener {
                     if (last_painted > 0)
                         Chatter.side_menu.getComponent(last_painted).setBackground(Color.WHITE);
                     last_painted = Integer.parseInt(command.split(":")[1]);
-                    Chatter.side_menu.getComponent(last_painted).setBackground(new Color(0xdddddd));
+                    Chatter.side_menu.getComponent(last_painted).setBackground(Color.LIGHT_GRAY);
                 } catch (Exception e) { e.printStackTrace(); }
             }
         }

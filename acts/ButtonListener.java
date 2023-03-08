@@ -149,7 +149,12 @@ public class ButtonListener implements ActionListener {
                 Chatter.side_menu.refreshGroups();
                 Chatter.chat_frame.setVisible(true);
             }
-
+            case "Invite" -> {
+                // System.out.println("INSERT INTO requests (user_id, group_id) VALUES (" + Database.getUserID(Invite.username_field.getText()) + ", " + Chatter.group_id + ");");
+                Database.query("INSERT INTO requests (user_id, group_id) VALUES (" + Database.getUserID(Invite.username_field.getText()) + ", " + Chatter.group_id + ");");
+                JOptionPane.showMessageDialog(null, "Successfully saved request.", "Success!", JOptionPane.INFORMATION_MESSAGE);
+                Chatter.invite_frame.dispose();
+            }
             default -> System.out.println(ae.getActionCommand());
         }
     }

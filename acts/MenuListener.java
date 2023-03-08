@@ -38,6 +38,9 @@ public class MenuListener implements ActionListener {
                 Chatter.new_group_frame = new NewGroup();
             }
             case "Invite" -> {
+                Chatter.invite_frame = new Invite();
+            }
+            case "Enter chat" -> {
                 
             }
             case "Edit group" -> {
