@@ -34,21 +34,11 @@ public class MenuListener implements ActionListener {
                 Chatter.change_password_frame = new ChangePassword();
             }
             /* GROUP */
-            case "Create new" -> {
-                Chatter.new_group_frame = new NewGroup();
-            }
-            case "Invite" -> {
-                Chatter.invite_frame = new Invite();
-            }
-            case "Enter chat" -> {
-                
-            }
-            case "Edit group" -> {
-                
-            }
-            case "Exit / Delete" -> {
-                Chatter.exit_group_frame = new ExitGroup();
-            }
+            case "Create new"    -> Chatter.new_group_frame = new NewGroup();
+            case "Invite"        -> Chatter.invite_frame = new Invite();
+            case "Enter chat"    -> Chatter.enter_chat_frame = new EnterChat();
+            case "Edit group"    -> { }
+            case "Exit / Delete" -> Chatter.exit_group_frame = new ExitGroup();
             /* WINDOW */
             case "Toggle fullscreen" -> {
                 Chatter.full_screen = !Chatter.full_screen;

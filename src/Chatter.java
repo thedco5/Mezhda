@@ -40,7 +40,7 @@ public class Chatter { // ~ 1300 lines fully in this project
     // static Action keyboard;
     public static JFrame chat_frame;
     public static JFrame form_frame, change_username_frame, delete_account_frame, change_password_frame;
-    public static JFrame new_group_frame, exit_group_frame, invite_frame;
+    public static JFrame new_group_frame, exit_group_frame, invite_frame, enter_chat_frame;
     public static JPanel main_panel, side_panel;
     public static JTextField field;
     public static JSplitPane split_pane;

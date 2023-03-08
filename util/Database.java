@@ -50,6 +50,13 @@ public class Database {
         } catch (Exception e) { e.printStackTrace(); }
         return 0;
     }
+    public static int getGroupID(String groupname) {
+        try ( ResultSet rs = selectFromGroups(groupname) ) {
+            rs.next();
+            return rs.getInt("id");
+        } catch (Exception e) { e.printStackTrace(); }
+        return 0;
+    }
     public static String getUsername(int id) {
         try ( ResultSet rs = query("SELECT username FROM users WHERE id LIKE " + id + ";") ) {
             if (rs.next()) return rs.getString("username");

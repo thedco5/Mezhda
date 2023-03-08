@@ -155,6 +155,21 @@ public class ButtonListener implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Successfully saved request.", "Success!", JOptionPane.INFORMATION_MESSAGE);
                 Chatter.invite_frame.dispose();
             }
+            case "Join" -> {
+                int group_id = Database.getGroupID(EnterChat.groupname_field.getText());
+                String sql = "FROM requests WHERE user_id LIKE " + Chatter.user_id + " AND group_id LIKE " + group_id + ";";
+                try ( ResultSet rs = Database.query("SELECT * " + sql) ) {
+                    if (rs.next()) {
+                        Database.query("DELETE " + sql);
+                        Database.query("INSERT INTO members (user_id, group_id) VALUES (" + Chatter.user_id + ", " + group_id + ");");
+                        Chatter.side_menu.refreshGroups();
+                        Chatter.enter_chat_frame.dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "You aren't invited! \nContact the owner!", "Error!", JOptionPane.ERROR_MESSAGE);
+                        Chatter.enter_chat_frame.dispose();
+                    }
+                } catch (Exception e) { e.printStackTrace(); }
+            }
             default -> System.out.println(ae.getActionCommand());
         }
     }
