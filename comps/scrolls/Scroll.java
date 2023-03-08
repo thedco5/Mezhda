@@ -1,4 +1,4 @@
-package comps;
+package comps.scrolls;
 
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.awt.Dimension;

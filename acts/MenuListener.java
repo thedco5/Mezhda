@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JFrame;
 
 import forms.*;
+import menus.*;
 import src.*;
 
 public class MenuListener implements ActionListener {
@@ -38,7 +39,7 @@ public class MenuListener implements ActionListener {
             case "Screen size" -> {
                 int width = (int) Chatter.main_panel.getSize().getWidth();
                 int height = (int) Chatter.main_panel.getSize().getHeight();
-                Chatter.screen_size_mi.setText(width + "×" + height + "px");
+                WindowMenu.screen_size_mi.setText(width + "×" + height + "px");
                 Chatter.window_menu.doClick();
             }
             case "Minimise window" -> Chatter.chat_frame.setState(JFrame.ICONIFIED);

@@ -11,7 +11,11 @@ public class GroupListener implements ActionListener {
     public void actionPerformed(ActionEvent ae) {
         String command = ae.getActionCommand();
         switch (command) {
-            case "refresh" -> { Chatter.side_menu.refreshGroups(); }
+            case "refresh" -> { 
+                Chatter.side_menu.refreshGroups(); 
+                Chatter.chat_frame.pack(); 
+            }
+            // case NUMBER -> GROUP ID
             default -> System.out.println(command);
         }
     }

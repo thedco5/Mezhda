@@ -1,4 +1,4 @@
-package comps;
+package comps.scrolls;
 
 import javax.swing.JScrollPane;
 import javax.swing.BorderFactory;

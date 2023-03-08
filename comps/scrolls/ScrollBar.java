@@ -1,11 +1,10 @@
-package comps;
+package comps.scrolls;
 
 import javax.swing.JScrollBar;
-
-import src.*;
-
 import java.awt.Color;
 import javax.swing.BorderFactory;
+
+import src.*;
 
 public class ScrollBar extends JScrollBar {
     public ScrollBar() {

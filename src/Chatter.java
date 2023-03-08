@@ -29,6 +29,8 @@ import acts.*;
 import forms.*;
 import menus.*;
 import comps.*;
+import comps.menus.*;
+import comps.scrolls.*;
 import util.*;
 
 import javax.swing.JComponent;
@@ -45,9 +47,7 @@ public class Chatter {
     public static TextPane text;
     public static MenuBar menu_bar;
     public static SideMenu side_menu;
-    public static ProfileMenu profile_menu;
-    public static Menu groups_menu, window_menu;
-    public static MenuItem fullscreen_mi, minimize_mi, screen_size_mi;
+    public static Menu profile_menu, groups_menu, window_menu;
     public static ScrollBar group_scroll_bar, text_scroll_bar;
     public static ScrollPane group_scroll_pane, text_scroll_pane;
 
@@ -60,7 +60,7 @@ public class Chatter {
     public static String prev_update;
 
     public static final String IMG_URL = "imgs/icon.png";
-    public static int user_id;
+    public static int user_id, group_id;
     public static boolean full_screen;
     public static GraphicsDevice gr_dev = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
 
@@ -90,20 +90,7 @@ public class Chatter {
         label.setPreferredSize(new Dimension(label_height * 30, label_height));
 
         /* MESSAGES AREA */
-        text = new TextPane();
-
-        /* WINDOW MENU */
-        screen_size_mi = new MenuItem("0×0 px", KeyEvent.VK_X);
-        screen_size_mi.setActionCommand("Screen size");
-        screen_size_mi.setForeground(Color.GRAY);
-        fullscreen_mi = new MenuItem("Toggle fullscreen", KeyEvent.VK_T);
-        fullscreen_mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F11, 0));
-        minimize_mi = new MenuItem("Minimise window", KeyEvent.VK_M);
-        minimize_mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0));
-        window_menu = new Menu("Window", KeyEvent.VK_W);
-        window_menu.add(screen_size_mi);
-        window_menu.add(fullscreen_mi);
-        window_menu.add(minimize_mi);
+        text = new TextPane(); 
 
         /* TOP MENU */
         menu_bar = new MenuBar();
@@ -111,7 +98,7 @@ public class Chatter {
         menu_bar.add(new MenuPipe());
         menu_bar.add(groups_menu = new Menu("Groups", KeyEvent.VK_G));
         menu_bar.add(new MenuPipe());
-        menu_bar.add(window_menu);
+        menu_bar.add(window_menu = new WindowMenu("Window", KeyEvent.VK_W));
         menu_bar.setSize(label_height * 30, label_height);
 
         /* SIDE MENU */

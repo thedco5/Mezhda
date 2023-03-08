@@ -4,9 +4,9 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.border.Border;
 
-import src.*;
-
 import java.awt.Color;
+
+import src.*;
 
 public class GroupButton extends JButton {
     public GroupButton(String name) {

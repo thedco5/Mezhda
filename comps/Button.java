@@ -1,10 +1,9 @@
 package comps;
 
 import javax.swing.JButton;
+import java.awt.Color;
 
 import src.*;
-
-import java.awt.Color;
 
 public class Button extends JButton {
     public Button(String name) {

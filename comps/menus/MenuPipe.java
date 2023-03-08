@@ -1,6 +1,4 @@
-package comps;
-
-import menus.Menu;
+package comps.menus;
 
 public class MenuPipe extends Menu {
     public MenuPipe() {

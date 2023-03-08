@@ -1,7 +1,6 @@
-package comps;
+package comps.menus;
 
 import java.awt.Color;
-
 import javax.swing.JMenuBar;
 
 public class MenuBar extends JMenuBar {

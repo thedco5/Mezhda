@@ -3,6 +3,8 @@ package menus;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 
+import comps.menus.*;
+
 public class ProfileMenu extends Menu {
 
     public static Menu change_profile_sm;

@@ -2,7 +2,7 @@ package acts;
 
 import java.sql.ResultSet;
 
-import src.Chatter;
+import src.*;
 import util.*;
 
 public class Updater implements Runnable {
