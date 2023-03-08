@@ -15,17 +15,19 @@ public class Database {
     public static Statement stmt;
 
     public Database() {
-        try {
+        for (;;) try {
             conn = DriverManager.getConnection(URL, USER, PASS);
             stmt = conn.createStatement();
+            break;
         } catch (Exception e) { e.printStackTrace(); }
     }
 
     public static synchronized ResultSet query(String sql) {
         // if (sql.matches(".*.;.*.;.*.")) return null;
-        try {
+        for (;;) try {
             if (stmt.execute(sql))
                 return stmt.getResultSet();
+            break;
         } catch (Exception e) { e.printStackTrace(); }
         return null;
     }
@@ -34,6 +36,9 @@ public class Database {
     
     public static ResultSet selectFromUsers(String username) {
         return query("SELECT * FROM users WHERE username LIKE '" + username + "';");
+    }
+    public static ResultSet selectFromGroups(String groupname) {
+        return query("SELECT * FROM chatter.groups WHERE groupname LIKE '" + groupname + "';");
     }
     public static ResultSet selectFromUsers(int id) {
         return query("SELECT * FROM users WHERE id LIKE " + id + ";");

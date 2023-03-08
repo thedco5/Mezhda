@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
 
+import forms.group.*;
 import forms.prof.*;
 import src.*;
 import util.*;
@@ -14,6 +15,9 @@ public class ButtonListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent ae) {
         switch (ae.getActionCommand()) {
+
+            /* PROFILE */
+
             case "Register" -> {
                 String username = LogForm.username_field.getText();
                 String password = new String(LogForm.password_field.getPassword());
@@ -113,6 +117,26 @@ public class ButtonListener implements ActionListener {
                     }
                 } catch (Exception e) { e.printStackTrace(); }
             }
+            
+            /* GROUP */
+
+            case "Create chat" -> {
+                String groupname = NewGroup.groupname_field.getText();
+                System.out.println(groupname);
+                try (ResultSet rs = Database.selectFromGroups(groupname)) {
+                    if (!Utility.checkRegex(groupname, groupname)) break;
+                    if (rs.next()) {
+                        JOptionPane.showMessageDialog(null, "This groupname already exists! \nTry again!", "Error!", JOptionPane.ERROR_MESSAGE);
+                    } else {
+                        Database.stmt.execute("INSERT INTO chatter.groups (groupname, owner_id) VALUES ('" + groupname
+                         + "', " + Chatter.user_id + ");");
+                        JOptionPane.showMessageDialog(null, "Successfully added new group.", "Success!", JOptionPane.INFORMATION_MESSAGE);
+                        Chatter.new_group_frame.dispose();
+                        Chatter.side_menu.refreshGroups();
+                    }
+                } catch (Exception e) { e.printStackTrace(); }
+            }
+            
             default -> System.out.println(ae.getActionCommand());
         }
     }

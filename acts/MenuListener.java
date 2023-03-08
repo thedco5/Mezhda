@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 
+import forms.group.*;
 import forms.prof.*;
 import menus.*;
 import src.*;
@@ -34,16 +35,16 @@ public class MenuListener implements ActionListener {
             }
             /* GROUP */
             case "Create new" -> {
-
+                Chatter.new_group_frame = new NewGroup();
             }
-            case "Send request" -> {
+            case "Invite" -> {
                 
             }
             case "Edit group" -> {
                 
             }
             case "Exit / Delete" -> {
-                
+                Chatter.exit_group_frame = new ExitGroup();
             }
             /* WINDOW */
             case "Toggle fullscreen" -> {

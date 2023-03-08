@@ -21,6 +21,7 @@ public class Utility {
     }
     public static boolean checkRegex(String username, String password) {
         if (!(checkRegex(username) && checkRegex(password))) {
+            System.out.println(username + "::" + password);
             JOptionPane.showMessageDialog(null, "Only 4-16 characters A-Z, \na-z, 0-9 and _ are allowed!", "Error!", JOptionPane.ERROR_MESSAGE);
             return false;
         }

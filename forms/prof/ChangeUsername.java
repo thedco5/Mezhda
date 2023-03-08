@@ -27,16 +27,14 @@ public class ChangeUsername extends JFrame {
     public static Button confirm_button;
 
     public ChangeUsername() {
-        
-        int label_height;
+
         String current_username = Database.getUsername(Chatter.user_id);
 
         /* NEW USERNAME */
         new_username = new Label("new username");
         new_username_field = new JTextField(current_username);
         new_username_field.setFont(Chatter.font);
-        label_height = (int) new_username.getPreferredSize().getHeight();
-        new_username_field.setPreferredSize(new Dimension(label_height * 5, label_height));
+        new_username_field.setPreferredSize(new Dimension(Chatter.base_height * 5, Chatter.base_height));
         new_username_panel = new Panel(new FlowLayout(FlowLayout.RIGHT));
         new_username_panel.add(new_username);
         new_username_panel.add(new_username_field);
@@ -45,8 +43,7 @@ public class ChangeUsername extends JFrame {
         confirm_username = new Label("repeat username");
         confirm_username_field = new JTextField(current_username);
         confirm_username_field.setFont(Chatter.font);
-        label_height = (int) new_username.getPreferredSize().getHeight();
-        confirm_username_field.setPreferredSize(new Dimension(label_height * 5, label_height));
+        confirm_username_field.setPreferredSize(new Dimension(Chatter.base_height * 5, Chatter.base_height));
         confirm_username_panel = new Panel(new FlowLayout(FlowLayout.RIGHT));
         confirm_username_panel.add(confirm_username);
         confirm_username_panel.add(confirm_username_field);
@@ -55,7 +52,7 @@ public class ChangeUsername extends JFrame {
         password_label = new Label("password");
         password_field = new JPasswordField("");
         password_field.setFont(Chatter.font);
-        password_field.setPreferredSize(new Dimension(label_height * 5, label_height));
+        password_field.setPreferredSize(new Dimension(Chatter.base_height * 5, Chatter.base_height));
         password_panel = new Panel(new FlowLayout(FlowLayout.RIGHT));
         password_panel.add(password_label);
         password_panel.add(password_field);

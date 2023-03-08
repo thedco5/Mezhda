@@ -38,7 +38,9 @@ import javax.swing.JComponent;
 public class Chatter { // ~ 1300 lines fully in this project
 
     // static Action keyboard;
-    public static JFrame chat_frame, form_frame, change_username_frame, delete_account_frame, change_password_frame;
+    public static JFrame chat_frame;
+    public static JFrame form_frame, change_username_frame, delete_account_frame, change_password_frame;
+    public static JFrame new_group_frame, exit_group_frame;
     public static JPanel main_panel, side_panel;
     public static JTextField field;
     public static JSplitPane split_pane;
@@ -60,6 +62,7 @@ public class Chatter { // ~ 1300 lines fully in this project
     public static String prev_update;
 
     public static final String IMG_URL = "imgs/icon.png";
+    public static int base_height;
     public static int user_id, group_id;
     public static boolean full_screen;
     public static GraphicsDevice gr_dev = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0];
@@ -85,9 +88,9 @@ public class Chatter { // ~ 1300 lines fully in this project
 
         /* TOP LABEL AND FIELD */
         label = new Label(" label ");
-        label.setLocation(0, 24);
-        int label_height = (int) label.getPreferredSize().getHeight();
-        label.setPreferredSize(new Dimension(label_height * 30, label_height));
+        // label.setLocation(0, 24);
+        base_height = (int) (label.getPreferredSize().getHeight() * 1.20);
+        label.setPreferredSize(new Dimension(base_height * 30, base_height));
 
         /* MESSAGES AREA */
         text = new TextPane(); 
@@ -99,7 +102,7 @@ public class Chatter { // ~ 1300 lines fully in this project
         menu_bar.add(groups_menu = new GroupMenu("Groups", KeyEvent.VK_G));
         menu_bar.add(new MenuPipe());
         menu_bar.add(window_menu = new WindowMenu("Window", KeyEvent.VK_W));
-        menu_bar.setSize(label_height * 30, label_height);
+        menu_bar.setSize(base_height * 30, base_height);
 
         /* SIDE MENU */
         side_menu = new SideMenu(); 
@@ -127,9 +130,7 @@ public class Chatter { // ~ 1300 lines fully in this project
         split_pane.setUI(new BasicSplitPaneUI() {
             public BasicSplitPaneDivider createDefaultDivider() {
                 return new BasicSplitPaneDivider(this) {
-                    public void setBorder(Border b) {
-                    }
-
+                    public void setBorder(Border b) {}
                     public void paint(Graphics g) {
                         g.setColor(new Color(0xeeeeee));
                         g.fillRect(0, 0, getSize().width, getSize().height);
@@ -168,7 +169,7 @@ public class Chatter { // ~ 1300 lines fully in this project
         /* WINDOWS */
         form_frame = new LogForm();
         chat_frame = new JFrame("Chatter");
-        chat_frame.setVisible(true);
+        // chat_frame.setVisible(true);
         chat_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         chat_frame.setIconImage(new ImageIcon(IMG_URL).getImage());
         // chat_frame.setResizable(false);

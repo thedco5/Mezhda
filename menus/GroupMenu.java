@@ -12,13 +12,16 @@ public class GroupMenu extends Menu {
     public GroupMenu(String name, int ke) {
         super(name, ke);
 
-        current_group_mi = new MenuItem("current: ∅");
+        current_group_mi = new MenuItem("chat: ∅");
         current_group_mi.setEnabled(false);
-        new_group_mi = new MenuItem("Create new", KeyEvent.VK_N);
-        add_to_group_mi = new MenuItem("Send request", KeyEvent.VK_S);
+        new_group_mi = new MenuItem("Create new", KeyEvent.VK_C);
+        add_to_group_mi = new MenuItem("Invite", KeyEvent.VK_I);
         edit_mi = new MenuItem("Edit group", KeyEvent.VK_E);
         delete_group_mi = new MenuItem("Exit / Delete");
         delete_group_mi.setForeground(Color.RED.darker()); 
+        add_to_group_mi.setEnabled(false);
+        edit_mi.setEnabled(false);
+        delete_group_mi.setEnabled(false);
 
         add(current_group_mi);
         add(new_group_mi);

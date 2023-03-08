@@ -24,15 +24,12 @@ public class LogForm extends JFrame {
     public static Button login_button, register_button;
 
     public LogForm() {
-        
-        int label_height;
 
         /* USERNAME */
         username_label = new Label("username");
         username_field = new JTextField("");
         username_field.setFont(Chatter.font);
-        label_height = (int) username_label.getPreferredSize().getHeight();
-        username_field.setPreferredSize(new Dimension(label_height * 5, label_height));
+        username_field.setPreferredSize(new Dimension(Chatter.base_height * 5, Chatter.base_height));
         username_panel = new Panel(new FlowLayout(FlowLayout.RIGHT));
         username_panel.add(username_label);
         username_panel.add(username_field);
@@ -41,7 +38,7 @@ public class LogForm extends JFrame {
         password_label = new Label("password");
         password_field = new JPasswordField("");
         password_field.setFont(Chatter.font);
-        password_field.setPreferredSize(new Dimension(label_height * 5, label_height));
+        password_field.setPreferredSize(new Dimension(Chatter.base_height * 5, Chatter.base_height));
         password_panel = new Panel(new FlowLayout(FlowLayout.RIGHT));
         password_panel.add(password_label);
         password_panel.add(password_field);

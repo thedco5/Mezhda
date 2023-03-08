@@ -22,6 +22,8 @@ public class SideMenu extends JPanel {
         GroupButton group_button = new GroupButton("chats");
         group_button.setActionCommand("refresh");
         group_button.setForeground(Color.GRAY);
+        group_button.setEnabled(false);
+
         add(group_button);
         int counter = 1;
         try ( ResultSet rs = Database.query("SELECT * FROM chatter.groups;") ) {
@@ -33,6 +35,5 @@ public class SideMenu extends JPanel {
             }
         } catch (Exception e) { e.printStackTrace(); }
         setLayout(new GridLayout(counter, 1));
-        setPreferredSize(getPreferredSize());
     }
 }

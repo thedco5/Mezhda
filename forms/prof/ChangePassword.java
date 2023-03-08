@@ -24,15 +24,12 @@ public class ChangePassword extends JFrame {
     public static Button confirm_button;
 
     public ChangePassword() {
-        
-        int label_height;
 
         /* NEW PASSWORD */
         new_password = new Label("new password");
         new_password_field = new JPasswordField();
         new_password_field.setFont(Chatter.font);
-        label_height = (int) new_password.getPreferredSize().getHeight();
-        new_password_field.setPreferredSize(new Dimension(label_height * 5, label_height));
+        new_password_field.setPreferredSize(new Dimension(Chatter.base_height * 5, Chatter.base_height));
         new_password_panel = new Panel(new FlowLayout(FlowLayout.RIGHT));
         new_password_panel.add(new_password);
         new_password_panel.add(new_password_field);
@@ -41,8 +38,7 @@ public class ChangePassword extends JFrame {
         confirm_password = new Label("confirm password");
         confirm_password_field = new JPasswordField();
         confirm_password_field.setFont(Chatter.font);
-        label_height = (int) new_password.getPreferredSize().getHeight();
-        confirm_password_field.setPreferredSize(new Dimension(label_height * 5, label_height));
+        confirm_password_field.setPreferredSize(new Dimension(Chatter.base_height * 5, Chatter.base_height));
         confirm_password_panel = new Panel(new FlowLayout(FlowLayout.RIGHT));
         confirm_password_panel.add(confirm_password);
         confirm_password_panel.add(confirm_password_field);
@@ -51,7 +47,7 @@ public class ChangePassword extends JFrame {
         password_label = new Label("old password");
         password_field = new JPasswordField("");
         password_field.setFont(Chatter.font);
-        password_field.setPreferredSize(new Dimension(label_height * 5, label_height));
+        password_field.setPreferredSize(new Dimension(Chatter.base_height * 5, Chatter.base_height));
         password_panel = new Panel(new FlowLayout(FlowLayout.RIGHT));
         password_panel.add(password_label);
         password_panel.add(password_field);

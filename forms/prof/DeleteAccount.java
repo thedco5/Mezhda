@@ -24,15 +24,12 @@ public class DeleteAccount extends JFrame {
     public static Button confirm_button;
 
     public DeleteAccount() {
-        
-        int label_height;
 
         /* PASSWORD */
         password_label = new Label("password");
-        label_height = (int) password_label.getPreferredSize().getHeight();
         password_field = new JPasswordField("");
         password_field.setFont(Chatter.font);
-        password_field.setPreferredSize(new Dimension(label_height * 5, label_height));
+        password_field.setPreferredSize(new Dimension(Chatter.base_height * 5, Chatter.base_height));
         password_panel = new Panel(new FlowLayout(FlowLayout.RIGHT));
         password_panel.add(password_label);
         password_panel.add(password_field);
