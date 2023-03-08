@@ -136,7 +136,20 @@ public class ButtonListener implements ActionListener {
                     }
                 } catch (Exception e) { e.printStackTrace(); }
             }
-            
+            case "Remove chat" -> {
+                
+                if (ExitGroup.is_owner) {
+                    Database.query("DELETE FROM members WHERE group_id LIKE " + Chatter.group_id + ";");
+                    Database.query("DELETE FROM chatter.groups WHERE id LIKE " + Chatter.group_id + ";");
+                } else {
+                    Database.query("DELETE FROM members WHERE group_id LIKE " + Chatter.group_id + " AND user_id LIKE " + Chatter.group_id + ";");
+                }
+                Chatter.group_id = 0;
+                Chatter.exit_group_frame.dispose();
+                Chatter.side_menu.refreshGroups();
+                Chatter.chat_frame.setVisible(true);
+            }
+
             default -> System.out.println(ae.getActionCommand());
         }
     }

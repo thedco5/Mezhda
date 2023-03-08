@@ -29,7 +29,7 @@ public class SideMenu extends JPanel {
         try ( ResultSet rs = Database.query("SELECT * FROM chatter.groups;") ) {
             while (rs.next()) {
                 GroupButton button = new GroupButton(rs.getString("groupname"));
-                button.setActionCommand(String.valueOf(rs.getInt("id")));
+                button.setActionCommand(String.valueOf(rs.getInt("id")) + ":" + String.valueOf(counter));
                 add(button);
                 counter++;
             }
