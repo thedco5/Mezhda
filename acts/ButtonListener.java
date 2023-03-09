@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
 
+import comps.MessagePanel;
 import forms.group.*;
 import forms.prof.*;
 import src.*;
@@ -170,6 +171,28 @@ public class ButtonListener implements ActionListener {
                     }
                 } catch (Exception e) { e.printStackTrace(); }
             }
+            
+            /* SENDING MESSAGES */
+
+            case "Send" -> {
+                String message = MessagePanel.message_field.getText();
+                if (message.equals("")) break;
+                if (message.length() > 128) {
+                    JOptionPane.showMessageDialog(null, "This message is too long!", "Error!", JOptionPane.ERROR_MESSAGE);
+                    break;
+                }
+                // make it only take the first 128 characters!
+                try (ResultSet rs = Database.query("SELECT * from members WHERE user_id LIKE " + Chatter.user_id + " AND group_id LIKE " + Chatter.group_id + ";")) {
+                    if (!rs.next()) {
+                        JOptionPane.showMessageDialog(null, "There was an unexpected error!", "Error!", JOptionPane.ERROR_MESSAGE);
+                        break;
+                    }
+                    int member_id = rs.getInt("id");
+                    Database.query("INSERT INTO messages (message, member_id) VALUES ('" + message + "', " + member_id + ");");
+                    MessagePanel.message_field.setText("");
+                } catch (Exception e) { e.printStackTrace(); }
+            }
+
             default -> System.out.println(ae.getActionCommand());
         }
     }

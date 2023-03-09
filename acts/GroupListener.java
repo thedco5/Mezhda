@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import comps.MessagePanel;
 import menus.*;
 import src.*;
 import util.*;
@@ -24,6 +25,7 @@ public class GroupListener implements ActionListener {
                 try {
                     int id = Integer.parseInt(command.split(":")[0]);
                     Chatter.group_id = id;
+                    MessagePanel.send_button.setEnabled(true);
                     GroupMenu.current_group_mi.setText("chat: " + Database.getGroupname(id));
                     GroupMenu.add_to_group_mi.setEnabled(true);
                     // GroupMenu.edit_mi.setEnabled(true);

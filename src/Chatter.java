@@ -41,7 +41,7 @@ public class Chatter { // ~ 1300 lines fully in this project
     public static JFrame chat_frame;
     public static JFrame form_frame, change_username_frame, delete_account_frame, change_password_frame;
     public static JFrame new_group_frame, exit_group_frame, invite_frame, enter_chat_frame;
-    public static JPanel main_panel, side_panel;
+    public static JPanel main_panel, side_panel, message_panel;
     public static JTextField field;
     public static JSplitPane split_pane;
 
@@ -140,13 +140,17 @@ public class Chatter { // ~ 1300 lines fully in this project
             }
         });
 
+        /* MESSAGES PANEL */
+        message_panel = new MessagePanel();
+
         /* MAIN PANEL */
         main_panel = new JPanel();
         main_panel.setLayout(new BorderLayout());
         main_panel.setFocusable(false);
         main_panel.add(menu_bar, BorderLayout.NORTH);
-        main_panel.add(label, BorderLayout.SOUTH);
+        // main_panel.add(label, BorderLayout.SOUTH);
         main_panel.add(split_pane);
+        main_panel.add(message_panel, BorderLayout.SOUTH);
 
         /* FULL SCREEN */
         main_panel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("F11"), "f11");
@@ -172,10 +176,12 @@ public class Chatter { // ~ 1300 lines fully in this project
         // chat_frame.setVisible(true);
         chat_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         chat_frame.setIconImage(new ImageIcon(IMG_URL).getImage());
+        chat_frame.setMinimumSize(new Dimension(base_height * 30, base_height * 20));
         // chat_frame.setResizable(false);
         chat_frame.add(main_panel);
         chat_frame.pack();
         chat_frame.setLocationRelativeTo(null);
+        chat_frame.getRootPane().setDefaultButton(MessagePanel.send_button);
 
         /* UPDATING THE MESSAGES */
         new Thread(new Updater()).start();
