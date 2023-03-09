@@ -3,6 +3,7 @@ package acts;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
+import java.util.Base64;
 
 import javax.swing.JOptionPane;
 
@@ -47,7 +48,7 @@ public class ButtonListener implements ActionListener {
                     if (rs.next()) {
                         if (Password.compare(password, rs.getString("password"))) {
                             Chatter.user_id = rs.getInt("id");
-                            System.out.println(Chatter.user_id);
+                            // System.out.println(Chatter.user_id);
                             Utility.setUser(username);
                             Chatter.form_frame.setVisible(false);
                         } else { 
@@ -111,6 +112,7 @@ public class ButtonListener implements ActionListener {
                         if (Password.compare(password, rs.getString("password"))) {
                             Database.query("DELETE FROM users WHERE id LIKE " + Chatter.user_id + ";");
                             Chatter.user_id = 0;
+                            Chatter.group_id = 0;
                             Chatter.delete_account_frame.dispose();
                             JOptionPane.showMessageDialog(null, "Successfully deleted the account.", "Success!", JOptionPane.INFORMATION_MESSAGE);
                             Chatter.form_frame.setVisible(true);
@@ -125,14 +127,14 @@ public class ButtonListener implements ActionListener {
 
             case "Create chat" -> {
                 String groupname = NewGroup.groupname_field.getText();
-                System.out.println(groupname);
+                // System.out.println(groupname);
                 try (ResultSet rs = Database.selectFromGroups(groupname)) {
                     if (!Utility.checkRegex(groupname, groupname)) break;
                     if (rs.next()) {
                         JOptionPane.showMessageDialog(null, "This groupname already exists! \nTry again!", "Error!", JOptionPane.ERROR_MESSAGE);
                     } else {
-                        Database.stmt.execute("INSERT INTO chatter.groups (groupname, owner_id) VALUES ('" + groupname
-                         + "', " + Chatter.user_id + ");");
+                        Database.stmt.execute("INSERT INTO chatter.groups (groupname, owner_id) VALUES ('" + groupname + "', " + Chatter.user_id + ");");
+                        Database.stmt.execute("INSERT INTO members (user_id, group_id) VALUES ('" + Chatter.user_id + "', " + Database.getGroupID(groupname) + ");");
                         JOptionPane.showMessageDialog(null, "Successfully added new group.", "Success!", JOptionPane.INFORMATION_MESSAGE);
                         Chatter.new_group_frame.dispose();
                         Chatter.side_menu.refreshGroups();
@@ -184,15 +186,14 @@ public class ButtonListener implements ActionListener {
                     break;
                 }
                 // ? make it only take the first 128 characters!
-                try (ResultSet rs = Database.query("SELECT * from members WHERE user_id LIKE " + Chatter.user_id + " AND group_id LIKE " + Chatter.group_id + ";")) {
-                    if (!rs.next()) {
-                        JOptionPane.showMessageDialog(null, "There was an unexpected error!", "Error!", JOptionPane.ERROR_MESSAGE);
-                        break;
-                    }
-                    int member_id = rs.getInt("id");
-                    Database.query("INSERT INTO messages (message, member_id) VALUES ('" + message + "', " + member_id + ");");
-                    MessagePanel.message_field.setText("");
-                } catch (Exception e) { e.printStackTrace(); }
+                int member_id = Database.currentMemberID();
+                if (member_id == 0) {
+                    JOptionPane.showMessageDialog(null, "There was an unexpected error!", "Error!", JOptionPane.ERROR_MESSAGE);
+                    break;
+                }
+                String encoded = Base64.getEncoder().encodeToString(message.getBytes());
+                Database.query("INSERT INTO messages (message, member_id) VALUES ('" + encoded + "', " + member_id + ");");
+                MessagePanel.message_field.setText("");
             }
 
             default -> System.out.println(ae.getActionCommand());

@@ -18,6 +18,7 @@ public class MenuListener implements ActionListener {
             /* PROFILES */
             case "Sign out" -> {
                 Chatter.user_id = 0;
+                Chatter.group_id = 0;
                 Chatter.chat_frame.dispose();
                 Chatter.form_frame.setVisible(true);
             }

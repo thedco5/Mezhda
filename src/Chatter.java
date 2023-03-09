@@ -73,7 +73,7 @@ public class Chatter { // ~ 1300 lines fully in this project
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Lexend.ttf")));
-            font = new Font("Lexend", Font.PLAIN, 20);
+            font = new Font("Arial", Font.PLAIN, 20);
         } catch (Exception e) {
             font = new Font("Arial", Font.PLAIN, 20);
         }
@@ -107,7 +107,6 @@ public class Chatter { // ~ 1300 lines fully in this project
         /* SIDE MENU */
         side_menu = new SideMenu(); 
         side_menu.refreshGroups();
-        System.out.println("side_menu " + side_menu.getPreferredSize().getWidth());
         side_panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         side_panel.setBackground(new Color(0xeeeeee));
         side_panel.add(side_menu);
@@ -176,7 +175,7 @@ public class Chatter { // ~ 1300 lines fully in this project
         // chat_frame.setVisible(true);
         chat_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         chat_frame.setIconImage(new ImageIcon(IMG_URL).getImage());
-        chat_frame.setMinimumSize(new Dimension(base_height * 30, base_height * 20));
+        chat_frame.setMinimumSize(new Dimension(base_height * 15, base_height * 10));
         // chat_frame.setResizable(false);
         chat_frame.add(main_panel);
         chat_frame.pack();

@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import src.Chatter;
+
 public class Database {
 
     public static final String URL = "jdbc:mysql://127.0.0.1/chatter";
@@ -26,8 +28,7 @@ public class Database {
         // if (sql.matches(".*.;.*.;.*.")) return null;
         for (;;) try {
             Statement stmt = conn.createStatement();
-            if (stmt.execute(sql))
-                return stmt.getResultSet();
+            if (stmt.execute(sql)) return stmt.getResultSet();
             break;
         } catch (Exception e) { e.printStackTrace(); }
         return null;
@@ -55,6 +56,12 @@ public class Database {
         try ( ResultSet rs = selectFromGroups(groupname) ) {
             rs.next();
             return rs.getInt("id");
+        } catch (Exception e) { e.printStackTrace(); }
+        return 0;
+    }
+    public static int currentMemberID() {
+        try ( ResultSet rs = query("SELECT * from members WHERE user_id LIKE " + Chatter.user_id + " AND group_id LIKE " + Chatter.group_id + ";")) {
+            if (rs.next()) return rs.getInt("id");
         } catch (Exception e) { e.printStackTrace(); }
         return 0;
     }
