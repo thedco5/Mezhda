@@ -47,6 +47,7 @@ public class ButtonListener implements ActionListener {
                     if (rs.next()) {
                         if (Password.compare(password, rs.getString("password"))) {
                             Chatter.user_id = rs.getInt("id");
+                            System.out.println(Chatter.user_id);
                             Utility.setUser(username);
                             Chatter.form_frame.setVisible(false);
                         } else { 
@@ -56,6 +57,7 @@ public class ButtonListener implements ActionListener {
                         JOptionPane.showMessageDialog(null, "Such user doesn't exist! \nTry again!", "Error!", JOptionPane.ERROR_MESSAGE);
                     }  
                 } catch (Exception e) { e.printStackTrace(); }
+                Chatter.side_menu.refreshGroups();
             }
             case "Change username" -> {
                 String username = ChangeUsername.new_username_field.getText();
@@ -181,7 +183,7 @@ public class ButtonListener implements ActionListener {
                     JOptionPane.showMessageDialog(null, "This message is too long!", "Error!", JOptionPane.ERROR_MESSAGE);
                     break;
                 }
-                // make it only take the first 128 characters!
+                // ? make it only take the first 128 characters!
                 try (ResultSet rs = Database.query("SELECT * from members WHERE user_id LIKE " + Chatter.user_id + " AND group_id LIKE " + Chatter.group_id + ";")) {
                     if (!rs.next()) {
                         JOptionPane.showMessageDialog(null, "There was an unexpected error!", "Error!", JOptionPane.ERROR_MESSAGE);

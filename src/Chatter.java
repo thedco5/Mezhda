@@ -107,6 +107,7 @@ public class Chatter { // ~ 1300 lines fully in this project
         /* SIDE MENU */
         side_menu = new SideMenu(); 
         side_menu.refreshGroups();
+        System.out.println("side_menu " + side_menu.getPreferredSize().getWidth());
         side_panel = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
         side_panel.setBackground(new Color(0xeeeeee));
         side_panel.add(side_menu);
@@ -125,7 +126,6 @@ public class Chatter { // ~ 1300 lines fully in this project
         /* SPLIT PANE */
         split_pane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, group_scroll_pane, text_scroll_pane);
         split_pane.setDividerSize((int) group_scroll_bar.getPreferredSize().getWidth() / 2);
-        split_pane.setDividerLocation((int) group_scroll_pane.getPreferredSize().getWidth());
         split_pane.setContinuousLayout(true);
         split_pane.setUI(new BasicSplitPaneUI() {
             public BasicSplitPaneDivider createDefaultDivider() {

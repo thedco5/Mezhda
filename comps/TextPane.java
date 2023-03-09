@@ -26,6 +26,7 @@ public class TextPane extends JTextPane {
         width -= Chatter.split_pane.getDividerSize();
         if (width < Chatter.group_scroll_pane.getPreferredSize().getWidth())
             width = (int) Chatter.group_scroll_pane.getPreferredSize().getWidth();
+
         return new Dimension(width, height);
     }
 }

@@ -17,6 +17,6 @@ public class ScrollPane extends JScrollPane {
         // setViewportView(viewport);
         setVerticalScrollBar(scroll_bar);
 
-        setPreferredSize(getPreferredSize());
+        // setPreferredSize(getPreferredSize());
     }
 }
