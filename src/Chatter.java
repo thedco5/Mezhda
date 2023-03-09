@@ -71,8 +71,8 @@ public class Chatter {
         /* CUSTOM FONT */
         try { 
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Lexend.ttf")));
-            font = new Font("Lexend", Font.PLAIN, 20);
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Ubuntu.ttf")));
+            font = new Font("Ubuntu", Font.BOLD, 20);
         } catch (Exception e) {
             font = new Font("Arial", Font.PLAIN, 20);
         }
@@ -178,6 +178,7 @@ public class Chatter {
         chat_frame.setMinimumSize(new Dimension(base_height * 15, base_height * 10));
         // chat_frame.setResizable(false);
         chat_frame.add(main_panel);
+        chat_frame.setFocusable(true);
         chat_frame.pack();
         chat_frame.setLocationRelativeTo(null);
         chat_frame.getRootPane().setDefaultButton(MessagePanel.send_button);

@@ -3,6 +3,11 @@ package acts;
 import java.sql.ResultSet;
 import java.util.Base64;
 
+// import javax.swing.text.StyledDocument;
+// import javax.swing.text.Style;
+// import javax.swing.text.StyleConstants;
+// import java.awt.Color;
+
 import src.*;
 import util.*;
 
@@ -21,7 +26,8 @@ public class Updater implements Runnable {
                 }
             } catch (Exception e) { e.printStackTrace(); }
             String str = strbr.toString();
-            if (!str.equals(Chatter.prev_update)) Chatter.text.setText(str);
+            if (!str.equals(Chatter.prev_update)) 
+                Chatter.text.setText(str);
             Chatter.prev_update = new String(str);
             try { Thread.sleep(500); } catch (Exception e) {} // updates every tenth of a second
 
