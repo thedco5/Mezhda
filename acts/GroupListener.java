@@ -23,6 +23,7 @@ public class GroupListener implements ActionListener {
             }
             default -> {
                 try {
+                    // System.out.println(command + " :: " + Chatter.side_menu.getComponentCount());
                     int id = Integer.parseInt(command.split(":")[0]);
                     Chatter.group_id = id;
                     MessagePanel.send_button.setEnabled(true);
@@ -36,7 +37,7 @@ public class GroupListener implements ActionListener {
                     last_painted = n == last_painted ? 0 : n;
                     if (last_painted > 0)
                         Chatter.side_menu.getComponent(last_painted).setBackground(Color.LIGHT_GRAY);
-                } catch (Exception e) { e.printStackTrace(); }
+                } catch (Exception e) { /*e.printStackTrace();*/ }
             }
         }
     }

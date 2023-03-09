@@ -48,7 +48,7 @@ public class ExitGroup extends JFrame {
 
         /* PANEL */
         main_panel = new Panel();
-        TitledBorder titled_border = BorderFactory.createTitledBorder(" '" + Database.getGroupname(Chatter.group_id) + "'' ");
+        TitledBorder titled_border = BorderFactory.createTitledBorder(" '" + Database.getGroupname(Chatter.group_id) + "' ");
         titled_border.setTitleFont(Chatter.font);
         titled_border.setBorder(BorderFactory.createLineBorder(Color.GRAY));
         main_panel.setBorder(BorderFactory.createCompoundBorder(Chatter.padding, titled_border));

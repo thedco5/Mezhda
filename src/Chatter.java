@@ -35,9 +35,8 @@ import util.*;
 
 import javax.swing.JComponent;
 
-public class Chatter { // ~ 1300 lines fully in this project
+public class Chatter {
 
-    // static Action keyboard;
     public static JFrame chat_frame;
     public static JFrame form_frame, change_username_frame, delete_account_frame, change_password_frame;
     public static JFrame new_group_frame, exit_group_frame, invite_frame, enter_chat_frame;
@@ -73,7 +72,7 @@ public class Chatter { // ~ 1300 lines fully in this project
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Lexend.ttf")));
-            font = new Font("Arial", Font.PLAIN, 20);
+            font = new Font("Lexend", Font.PLAIN, 20);
         } catch (Exception e) {
             font = new Font("Arial", Font.PLAIN, 20);
         }
@@ -141,6 +140,7 @@ public class Chatter { // ~ 1300 lines fully in this project
 
         /* MESSAGES PANEL */
         message_panel = new MessagePanel();
+        message_panel.setFocusable(false);
 
         /* MAIN PANEL */
         main_panel = new JPanel();

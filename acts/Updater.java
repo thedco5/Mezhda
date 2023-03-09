@@ -23,7 +23,7 @@ public class Updater implements Runnable {
             String str = strbr.toString();
             if (!str.equals(Chatter.prev_update)) Chatter.text.setText(str);
             Chatter.prev_update = new String(str);
-            try { Thread.sleep(1000); } catch (Exception e) {} // updates every tenth of a second
+            try { Thread.sleep(500); } catch (Exception e) {} // updates every tenth of a second
 
             /*String username = Database.getUsername(Chatter.user_id);
             try ( ResultSet rs = Database.query("SELECT * FROM messages WHERE member_id LIKE " + Chatter.user_id + ";") ) {
