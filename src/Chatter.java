@@ -69,7 +69,7 @@ public class Chatter {
     public static void main(String[] args) {
 
         /* CUSTOM FONT */
-        try {
+        try { 
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Lexend.ttf")));
             font = new Font("Lexend", Font.PLAIN, 20);
