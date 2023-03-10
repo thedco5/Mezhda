@@ -17,29 +17,27 @@ public class Updater implements Runnable {
         for (;;) {
             // make it finally show le mensajes
             StringBuilder strbr = new StringBuilder(""); // document format
-            if (Chatter.group_id == 0) strbr.append("Select chat");
+            strbr.append("<html> <head><style> body { font-family: 'Ubuntu'; font-size: 20; font-weight: bold; } .gray { color: gray; } </head></style> <body>");
+            
+            if (Chatter.group_id == 0) 
+                strbr.append("<i>Select chat<i>");
+            
             try ( ResultSet rs = Database.query("SELECT users.username, messages.message FROM messages, members, users WHERE messages.member_id LIKE members.id AND members.user_id LIKE users.id AND members.group_id LIKE " + Chatter.group_id + " ORDER BY messages.id;") ) {
                 while (rs.next()) {
-                    strbr.append("@" + rs.getString("username") + ": ");
+                    strbr.append("<span class='gray'>" + rs.getString("username") + "</span> ");
                     String decoded = new String(Base64.getDecoder().decode(rs.getString("message")));
-                    strbr.append(decoded + "\n"); 
+                    strbr.append(decoded + "<br/>"); 
                 }
             } catch (Exception e) { e.printStackTrace(); }
+
+            strbr.append("</body></html>");
+
             String str = strbr.toString();
             if (!str.equals(Chatter.prev_update)) 
                 Chatter.text.setText(str);
+            
             Chatter.prev_update = new String(str);
             try { Thread.sleep(500); } catch (Exception e) {} // updates every tenth of a second
-
-            /*String username = Database.getUsername(Chatter.user_id);
-            try ( ResultSet rs = Database.query("SELECT * FROM messages WHERE member_id LIKE " + Chatter.user_id + ";") ) {
-                StringBuilder strbr = new StringBuilder(""); // Document format
-                while (rs.next()) strbr.append("@" + username + ": " + rs.getString("message") + "\n");
-                String str = strbr.toString();
-                Chatter.text.setText(Chatter.prev_update + "\n\n" + str);
-                // Chatter.text.setCaretPosition(Chatter.text.getDocument().getLength());
-                Thread.sleep(1000); // updates every tenth of a second
-            } catch (Exception e) { e.printStackTrace(); }*/
         }
     }
 }

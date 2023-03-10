@@ -58,7 +58,7 @@ public class Chatter {
     public static MenuListener menu_listener;
     public static GroupListener group_listener;
 
-    public static String prev_update;
+    public static String prev_update = ".";
 
     public static final String IMG_URL = "imgs/icon.png";
     public static int base_height;

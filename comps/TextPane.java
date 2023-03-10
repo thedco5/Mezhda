@@ -14,6 +14,7 @@ public class TextPane extends JTextPane {
         setEditable(false);
         DefaultCaret caret = (DefaultCaret) getCaret();
         caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE);
+        setContentType("text/html");
     }
 
     @Override
