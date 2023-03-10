@@ -32,8 +32,9 @@ public class Utility {
     }
     public static String format(String str) {
         String res = new String(str);
+        /* IN TESTING PERIOD!!! */
         /* PLAIN */
-        String[] array = res.split("(?<!!)(?=!/)|(?=/!)|(?<!!..)(?<=!/)|(?<=/!)");
+        /* String[] array = res.split("(?<!!)(?=!/)|(?=/!)|(?<!!..)(?<=!/)|(?<=/!)");
         int counter = 0;
         for (int i = 0; i < array.length; i++) {
             if (array[i].equals("!/")) {
@@ -49,7 +50,7 @@ public class Utility {
         for (int i = 0; i < counter; i++)
             res += "</i>";
         /* BOLD */
-        array = res.split("(?<!!)(?=!\\$)|(?=\\$!)|(?<!!..)(?<=!\\$)|(?<=\\$!)");
+        /* array = res.split("(?<!!)(?=!\\$)|(?=\\$!)|(?<!!..)(?<=!\\$)|(?<=\\$!)");
         counter = 0;
         for (int i = 0; i < array.length; i++) {
             if (array[i].equals("!$")) {
@@ -63,7 +64,7 @@ public class Utility {
         }
         res = String.join("", array);
         for (int i = 0; i < counter; i++)
-            res += "</u>";
+            res += "</u>"; */
         /* RESULT */
         return res;
     }
