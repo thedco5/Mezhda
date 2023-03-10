@@ -30,4 +30,23 @@ public class Utility {
     public static boolean checkRegex(String str) {
         return str.matches("^[A-Za-z0-9_]{4,16}");
     }
+    public static String format(String str) {
+        String res = new String(str);
+        String[] array = res.split("(?<!!)(?=!/)|(?=/!)|(?<!!..)(?<=!/)|(?<=/!)");
+        int counter = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals("!/")) {
+                array[i] = "<i>";
+                counter++;
+            }
+            else if (array[i].equals("/!")) { 
+                array[i] = "</i>";
+                if (counter > 0) counter--;
+            }
+        }
+        res = String.join("", array);
+        for (int i = 0; i < counter; i++)
+            res += "</i>";
+        return res;
+    }
 }

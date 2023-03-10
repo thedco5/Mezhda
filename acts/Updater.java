@@ -17,7 +17,7 @@ public class Updater implements Runnable {
         for (;;) {
             // make it finally show le mensajes
             StringBuilder strbr = new StringBuilder(""); // document format
-            strbr.append("<html> <head><style> body { font-family: 'Ubuntu'; font-size: 20; font-weight: bold; } .gray { color: gray; } </head></style> <body>");
+            strbr.append("<!DOCTYPE html> <html> <head><style> body { font-family: 'Ubuntu'; font-size: 20; font-weight: bold; } .gray { color: gray; } </head></style> <body>");
             
             if (Chatter.group_id == 0) 
                 strbr.append("<i>Select chat<i>");
@@ -26,7 +26,8 @@ public class Updater implements Runnable {
                 while (rs.next()) {
                     strbr.append("<span class='gray'>" + rs.getString("username") + "</span> ");
                     String decoded = new String(Base64.getDecoder().decode(rs.getString("message")));
-                    strbr.append(decoded + "<br/>"); 
+                    decoded = decoded.replaceAll("<", "&lt;");
+                    strbr.append(Utility.format(decoded) + "<br/>"); 
                 }
             } catch (Exception e) { e.printStackTrace(); }
 
