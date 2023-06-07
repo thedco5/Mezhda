@@ -60,7 +60,7 @@ public class Chatter {
 
     public static String prev_update = ".";
 
-    public static final String IMG_URL = "imgs/icon.png";
+    public static final String IMG_URL = "icon.png";
     public static int base_height;
     public static int user_id, group_id;
     public static boolean full_screen;
@@ -71,7 +71,7 @@ public class Chatter {
         /* CUSTOM FONT */
         try { 
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("fonts/Ubuntu.ttf")));
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("Ubuntu.ttf")));
             font = new Font("Ubuntu", Font.BOLD, 20);
         } catch (Exception e) {
             font = new Font("Arial", Font.PLAIN, 20);

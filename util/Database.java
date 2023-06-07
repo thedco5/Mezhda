@@ -1,5 +1,6 @@
 package util;
 
+import java.io.BufferedReader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -9,7 +10,7 @@ import src.Chatter;
 
 public class Database {
 
-    public static final String URL = "jdbc:mysql://127.0.0.1/chatter";
+    public static String URL = "jdbc:mysql://127.0.0.1/chatter";
     public static final String USER = "root";
     public static final String PASS = "msqlroot";
 
@@ -17,6 +18,8 @@ public class Database {
     public static Statement stmt;
 
     public Database() {
+        BufferedReader reader = new BufferedReader(new FileReader("dbaddr"));
+        URL = "jdbc:mysql://" + reader.readLine() + "/chatter";
         for (;;) try {
             conn = DriverManager.getConnection(URL, USER, PASS);
             stmt = conn.createStatement();

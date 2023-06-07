@@ -17,7 +17,7 @@ public class Updater implements Runnable {
         for (;;) {
             // make it finally show le mensajes
             StringBuilder strbr = new StringBuilder(""); // document format
-            strbr.append("<!DOCTYPE html> <html> <head><style> body { font-family: 'Ubuntu'; font-size: 20; font-weight: bold; } .gray { color: gray; } </head></style> <body>");
+            strbr.append("<!DOCTYPE html> <html> <head><style> body { font-family: 'Ubuntu'; font-size: 20; font-weight: bold; } .gray { color: gray; } </head></style> <body> ");
             
             if (Chatter.group_id == 0) 
                 strbr.append("<i>Select chat<i>");
